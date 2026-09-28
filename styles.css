@@ -36,3 +36,29 @@
 .status-success{color:#16845a}.status-error{color:#c43d3d}.status-loading{color:#12226c}
 #lookupCnpj:disabled{opacity:.7;cursor:wait}
 @media(max-width:560px){.cnpj-row{flex-direction:column}.cnpj-row .btn{width:100%}}
+
+/* CNPJ - entrada otimizada */
+.cnpj-row input{
+  min-width:0;
+  width:100%;
+  height:48px;
+  border:1px solid #dce4ee;
+  border-radius:11px;
+  padding:0 14px;
+  font:inherit;
+  font-size:14px;
+  color:#122540;
+  background:#fff;
+  outline:none;
+  transition:.2s;
+}
+.cnpj-row input::placeholder{color:#9aa7b8}
+.cnpj-row input:focus{
+  border-color:#f7a600;
+  box-shadow:0 0 0 4px rgba(247,166,0,.12);
+}
+.cnpj-row .btn{height:48px}
+@media(max-width:560px){
+  .cnpj-row{gap:9px}
+  .cnpj-row input{width:100%}
+}
