@@ -15,18 +15,51 @@ const applyRecipientTDE=async cnpj=>{
 const formatCnpj=v=>{const d=onlyDigits(v).slice(0,14);if(d.length<=2)return d;if(d.length<=5)return d.slice(0,2)+"."+d.slice(2);if(d.length<=8)return d.slice(0,2)+"."+d.slice(2,5)+"."+d.slice(5);if(d.length<=12)return d.slice(0,2)+"."+d.slice(2,5)+"."+d.slice(5,8)+"/"+d.slice(8);return d.slice(0,2)+"."+d.slice(2,5)+"."+d.slice(5,8)+"/"+d.slice(8,12)+"-"+d.slice(12,14);};
 const setupCnpjLookup=({inputId,buttonId,statusId,companyId,addressId,routeId,cepId,label})=>{
  const input=$(inputId),button=$(buttonId),status=$(statusId),company=$(companyId),address=$(addressId);
- input?.addEventListener("input",e=>e.target.value=formatCnpj(e.target.value));
- button?.addEventListener("click",async()=>{
-  const cnpj=onlyDigits(input?.value);if(cnpj.length!==14){if(status)status.innerHTML='<span class="status-error">Digite os 14 dígitos do CNPJ.</span>';return}
-  button.disabled=true;button.textContent="Consultando...";if(status)status.innerHTML='<span class="status-loading">Buscando dados na BrasilAPI...</span>';
-  try{const response=await fetch("/api/cnpj?cnpj="+encodeURIComponent(cnpj)),data=await response.json().catch(()=>({}));
+ if(!input||!button){
+  console.error("Campo/botão de CNPJ não encontrado:",inputId,buttonId);
+  return;
+ }
+ input.addEventListener("input",e=>e.target.value=formatCnpj(e.target.value));
+ const consultarCnpj=async()=>{
+  const cnpj=onlyDigits(input.value);
+  if(cnpj.length!==14){
+   if(status)status.innerHTML='<span class="status-error">Digite os 14 dígitos do CNPJ.</span>';
+   input.focus();
+   return;
+  }
+  button.disabled=true;
+  button.textContent="Consultando...";
+  if(status)status.innerHTML='<span class="status-loading">Buscando dados do CNPJ...</span>';
+  try{
+   const response=await fetch("/api/cnpj?cnpj="+encodeURIComponent(cnpj),{
+    method:"GET",
+    headers:{Accept:"application/json"},
+    cache:"no-store"
+   });
+   const text=await response.text();
+   let data={};
+   try{data=text?JSON.parse(text):{};}catch(_){throw new Error("A consulta retornou uma resposta inválida.");}
    if(!response.ok)throw new Error(data.error||"Não foi possível consultar este CNPJ agora.");
-   const nome=data.razao_social||data.nome_fantasia||"",endereco=[data.logradouro,data.numero,data.complemento,data.bairro].filter(Boolean).join(", "),cidadeUf=[data.municipio,data.uf].filter(Boolean).join(" / ");
-   if(company)company.value=nome;if(address)address.value=endereco;if(routeId&&$(routeId)&&cidadeUf)$(routeId).value=cidadeUf;if(cepId&&$(cepId)&&data.cep)$(cepId).value=formatCep(data.cep);
-   if(status)status.innerHTML='<span class="status-success">✓ '+label+' encontrado(a): '+nome+'</span>';if(label==="Destinatário")await applyRecipientTDE(cnpj);
-  }catch(error){if(status)status.innerHTML='<span class="status-error">'+(error.message||"Erro ao consultar CNPJ.")+'</span>';if(company)company.value="";if(address)address.value=""}
-  finally{button.disabled=false;button.textContent="Buscar"}
- });
+   const nome=data.razao_social||data.nome_fantasia||"";
+   if(!nome)throw new Error("CNPJ consultado, mas nenhum nome de empresa foi retornado.");
+   const endereco=[data.logradouro,data.numero,data.complemento,data.bairro].filter(Boolean).join(", ");
+   const cidadeUf=[data.municipio,data.uf].filter(Boolean).join(" / ");
+   if(company)company.value=nome;
+   if(address)address.value=endereco;
+   if(routeId&&$(routeId)&&cidadeUf)$(routeId).value=cidadeUf;
+   if(cepId&&$(cepId)&&data.cep)$(cepId).value=formatCep(data.cep);
+   if(status)status.innerHTML='<span class="status-success">✓ '+label+' encontrado(a): '+nome+'</span>';
+   if(label==="Destinatário")await applyRecipientTDE(cnpj);
+  }catch(error){
+   console.error("Erro na consulta de CNPJ:",error);
+   if(status)status.innerHTML='<span class="status-error">'+(error.message||"Erro ao consultar CNPJ.")+'</span>';
+  }finally{
+   button.disabled=false;
+   button.textContent="Buscar";
+  }
+ };
+ button.addEventListener("click",consultarCnpj);
+ input.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();consultarCnpj();}});
 };
 setupCnpjLookup({inputId:"#senderCnpj",buttonId:"#lookupSenderCnpj",statusId:"#senderCnpjStatus",companyId:"#senderCompany",addressId:"#senderAddress",routeId:"#origin",cepId:"#senderCep",label:"Remetente"});
 setupCnpjLookup({inputId:"#recipientCnpj",buttonId:"#lookupRecipientCnpj",statusId:"#recipientCnpjStatus",companyId:"#recipientCompany",addressId:"#recipientAddress",routeId:"#destination",cepId:"#cep",label:"Destinatário"});
