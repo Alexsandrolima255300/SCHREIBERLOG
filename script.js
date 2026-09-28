@@ -5,6 +5,8 @@ document.querySelectorAll(".mobile-nav a").forEach(a=>a.addEventListener("click"
 
 const onlyDigits=v=>v.replace(/\D/g,"");
 
+const formatCep=v=>{const d=onlyDigits(v).slice(0,8);return d.length>5?d.slice(0,5)+"-"+d.slice(5):d;};
+
 const formatCnpj=v=>{
   const d=onlyDigits(v).slice(0,14);
   if(d.length<=2)return d;
