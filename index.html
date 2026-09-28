@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b1f3a">
+  <title>SchreiberLog | Transporte de cargas e encomendas</title>
+  <meta name="description" content="Portal SchreiberLog para cotação de frete, rastreamento, coleta e atendimento.">
+  <link rel="icon" href="https://sbr.log.br/img/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <a class="brand" href="#inicio" aria-label="SchreiberLog">
+        <img src="https://sbr.log.br/img/logo.svg" alt="SchreiberLog">
+      </a>
+      <nav class="desktop-nav">
+        <a href="#cotacao">Cotação</a>
+        <a href="#rastreio">Rastreamento</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#atendimento">Atendimento</a>
+      </nav>
+      <button class="menu-btn" id="menuBtn" aria-label="Abrir menu">☰</button>
+      <a class="btn btn-primary nav-cta" href="#cotacao">Calcular frete</a>
+    </div>
+    <div class="mobile-nav" id="mobileNav">
+      <a href="#cotacao">Cotação</a>
+      <a href="#rastreio">Rastreamento</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#atendimento">Atendimento</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-grid container">
+        <div class="hero-copy reveal">
+          <span class="eyebrow">TRANSPORTE • LOGÍSTICA • CONEXÃO</span>
+          <h1>Seu embarque começa com uma <span>cotação simples.</span></h1>
+          <p>Um portal digital pensado para agilizar a cotação, o acompanhamento e a solicitação de coleta da SchreiberLog.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary btn-lg" href="#cotacao">Fazer cotação <span>→</span></a>
+            <a class="btn btn-ghost btn-lg" href="#rastreio">Rastrear carga</a>
+          </div>
+          <div class="trust-row">
+            <div><strong>36+</strong><span>anos de mercado</span></div>
+            <div><strong>SC • SP</strong><span>operação conectada</span></div>
+            <div><strong>24h</strong><span>canal digital</span></div>
+          </div>
+        </div>
+        <div class="hero-visual reveal">
+          <div class="orb orb-a"></div><div class="orb orb-b"></div>
+          <div class="route-card">
+            <div class="route-top"><span>SIMULAÇÃO DE EMBARQUE</span><span class="live-dot">● ONLINE</span></div>
+            <div class="route-line">
+              <div class="pin origin"></div>
+              <div class="route-info"><small>ORIGEM</small><b>Rio do Sul, SC</b></div>
+            </div>
+            <div class="route-track"><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="route-line">
+              <div class="pin destination"></div>
+              <div class="route-info"><small>DESTINO</small><b>São Paulo, SP</b></div>
+            </div>
+            <div class="route-footer"><span>Entrega estimada</span><strong>Consulte na cotação</strong></div>
+          </div>
+          <div class="floating-card card-one">⚡ <b>Resposta rápida</b><small>Fluxo digital de cotação</small></div>
+          <div class="floating-card card-two">✓ <b>Rastreamento</b><small>Acompanhe seu embarque</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote-section" id="cotacao">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="eyebrow">COTAÇÃO ONLINE</span>
+          <h2>Descubra as condições do seu embarque</h2>
+          <p>Preencha os dados da carga. O valor final deve ser conectado à tabela comercial oficial da SchreiberLog antes de entrar em produção.</p>
+        </div>
+        <form class="quote-card reveal" id="quoteForm">
+          <div class="form-title"><div class="icon-box">↗</div><div><h3>Nova cotação</h3><span>Dados básicos da carga</span></div></div>
+          <div class="form-grid">
+            <label>Origem
+              <input id="origin" required placeholder="Cidade / UF">
+            </label>
+            <label>Destino
+              <input id="destination" required placeholder="Cidade / UF">
+            </label>
+            <label>Peso da carga
+              <div class="input-unit"><input id="weight" type="number" min="0.01" step="0.01" required placeholder="0,00"><span>kg</span></div>
+            </label>
+            <label>Valor da NF
+              <div class="input-unit"><span>R$</span><input id="invoice" type="number" min="0" step="0.01" required placeholder="0,00"></div>
+            </label>
+            <label>Quantidade de volumes
+              <input id="volumes" type="number" min="1" step="1" required placeholder="1">
+            </label>
+            <label>CEP de destino
+              <input id="cep" inputmode="numeric" maxlength="9" placeholder="00000-000">
+            </label>
+          </div>
+          <div class="form-bottom">
+            <div class="secure-note">🔒 Seus dados ficam protegidos durante o envio.</div>
+            <button class="btn btn-primary btn-lg" type="submit">Continuar cotação <span>→</span></button>
+          </div>
+          <div class="quote-result" id="quoteResult" hidden></div>
+        </form>
+      </div>
+    </section>
+
+    <section class="tracking-section" id="rastreio">
+      <div class="container tracking-grid">
+        <div class="tracking-copy reveal">
+          <span class="eyebrow">RASTREAMENTO</span>
+          <h2>Saiba onde está sua carga.</h2>
+          <p>Digite o código do documento ou conhecimento para consultar o andamento do embarque.</p>
+          <form id="trackingForm" class="tracking-form">
+            <input id="trackingCode" required placeholder="Ex.: SCH-000000">
+            <button class="btn btn-primary" type="submit">Consultar</button>
+          </form>
+          <div id="trackingResult" class="tracking-result" hidden></div>
+        </div>
+        <div class="timeline-card reveal">
+          <div class="timeline-item active"><span>01</span><div><b>Coleta solicitada</b><small>O embarque entra no fluxo operacional.</small></div></div>
+          <div class="timeline-item"><span>02</span><div><b>Em trânsito</b><small>Atualização conforme integração operacional.</small></div></div>
+          <div class="timeline-item"><span>03</span><div><b>Em rota de entrega</b><small>A carga segue para o destino.</small></div></div>
+          <div class="timeline-item"><span>04</span><div><b>Entregue</b><small>Comprovante e encerramento do embarque.</small></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="services" id="servicos">
+      <div class="container">
+        <div class="section-heading reveal"><span class="eyebrow">SOLUÇÕES</span><h2>Um portal para o ciclo completo</h2></div>
+        <div class="service-grid">
+          <article class="service-card reveal"><span>01</span><h3>Cotação de frete</h3><p>Formulário estruturado para origem, destino, peso, NF e volumes.</p><a href="#cotacao">Solicitar →</a></article>
+          <article class="service-card reveal"><span>02</span><h3>Rastreamento</h3><p>Área preparada para integrar eventos e status do TMS da operação.</p><a href="#rastreio">Rastrear →</a></article>
+          <article class="service-card reveal"><span>03</span><h3>Solicitação de coleta</h3><p>Fluxo digital para reunir dados do remetente e agilizar a operação.</p><a href="#atendimento">Solicitar →</a></article>
+          <article class="service-card reveal"><span>04</span><h3>Área do cliente</h3><p>Base para login, histórico de cotações, documentos e embarques.</p><a href="#atendimento">Acessar →</a></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="network">
+      <div class="container network-box reveal">
+        <div><span class="eyebrow">REDE SCHREIBERLOG</span><h2>Operação conectada entre unidades.</h2><p>A relação pública de praça da empresa informa unidades responsáveis, regiões, frequência e previsões de entrega. Esses dados podem alimentar o módulo de prazo do portal.</p></div>
+        <div class="network-stats"><div><b>SC</b><span>Santa Catarina</span></div><div><b>SP</b><span>São Paulo</span></div><div><b>+</b><span>cidades atendidas</span></div></div>
+      </div>
+    </section>
+
+    <section class="contact" id="atendimento">
+      <div class="container contact-box reveal">
+        <div><span class="eyebrow">ATENDIMENTO</span><h2>Fale com a SchreiberLog.</h2><p>Use os canais oficiais para atendimento, coleta e acompanhamento.</p></div>
+        <div class="contact-actions">
+          <a class="contact-link" href="https://wa.me/5547997660043" target="_blank" rel="noopener"><b>WhatsApp SC</b><span>(47) 99766-0043 →</span></a>
+          <a class="contact-link" href="https://wa.me/551124081067" target="_blank" rel="noopener"><b>WhatsApp SP</b><span>(11) 2408-1067 →</span></a>
+          <a class="contact-link" href="https://sbr.log.br/" target="_blank" rel="noopener"><b>Site oficial</b><span>sbr.log.br →</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="container footer"><img src="https://sbr.log.br/img/logo.svg" alt="SchreiberLog"><span>Portal digital • SchreiberLog</span><span>© 2026</span></div></footer>
+  <script src="./script.js"></script>
+</body>
+</html>
