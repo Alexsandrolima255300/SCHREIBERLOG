@@ -64,3 +64,40 @@
 }
 
 .cnpj-party-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.cnpj-party{padding:18px;border:1px solid #e3e9f1;border-radius:14px;background:#fff}.party-title{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:14px}.party-title b{font-size:14px;color:#12226c}.party-title span{font-size:10px;color:#8996a8}.cnpj-party label{margin-top:11px}.cnpj-party label:first-of-type{margin-top:0}.cnpj-party input[readonly]{background:#f8fafc}.cnpj-party .cnpj-row input{min-width:0}.cnpj-party .cnpj-row .btn{padding-left:15px;padding-right:15px}@media(max-width:760px){.cnpj-party-grid{grid-template-columns:1fr}}
+
+/* NOVA COTAÇÃO — acabamento visual */
+.quote-section{position:relative;overflow:hidden}
+.quote-section::before{content:"";position:absolute;inset:0 0 auto;height:260px;background:linear-gradient(135deg,rgba(18,34,108,.055),rgba(247,166,0,.06),transparent);pointer-events:none}
+.quote-section .section-head,.quote-section .quote-form,.quote-section .quote-result{position:relative;z-index:1}
+.cnpj-lookup{border:1px solid #e4e8f2!important;background:linear-gradient(180deg,#fff,#f8faff)!important;box-shadow:0 12px 30px rgba(18,34,108,.06);border-radius:18px!important}
+.cnpj-party{border:1px solid #e7ebf3!important;border-radius:16px!important;background:#fff!important;box-shadow:0 6px 18px rgba(18,34,108,.045);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.cnpj-party:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(18,34,108,.08);border-color:#d7ddef!important}
+.party-title{padding-bottom:12px;border-bottom:1px solid #edf0f6;margin-bottom:16px!important}
+.party-title b{display:flex;align-items:center;gap:8px;font-size:15px!important}
+.party-title b::before{content:"";width:8px;height:8px;border-radius:50%;background:#f7a600;box-shadow:0 0 0 5px rgba(247,166,0,.12)}
+.party-title span{color:#7d899c!important}
+.cnpj-row{align-items:stretch}
+.cnpj-row input,.cnpj-party input[readonly]{border-color:#dfe5ef!important;box-shadow:inset 0 1px 2px rgba(18,34,108,.025)}
+.cnpj-row input:focus,.cnpj-party input[readonly]:focus{border-color:#f7a600!important;box-shadow:0 0 0 4px rgba(247,166,0,.11)!important}
+.cnpj-row .btn{border-radius:10px!important;font-weight:800;min-width:88px}
+.form-grid{gap:16px!important}
+.form-grid>label,.dimensions-field{background:#fff;border:1px solid #e7ebf3;border-radius:15px;padding:14px 15px;box-shadow:0 5px 16px rgba(18,34,108,.035);transition:border-color .2s,box-shadow .2s,transform .2s}
+.form-grid>label:focus-within,.dimensions-field:focus-within{border-color:#d6b45e;box-shadow:0 8px 22px rgba(18,34,108,.07),0 0 0 3px rgba(247,166,0,.07);transform:translateY(-1px)}
+.form-grid>label>input,.form-grid .input-unit{margin-top:7px}
+.form-grid>label>input{width:100%;box-sizing:border-box}
+.input-unit{border:1px solid #dfe5ef!important;background:#fbfcfe!important;border-radius:11px!important;overflow:hidden;transition:border-color .2s,box-shadow .2s}
+.input-unit:focus-within{border-color:#f7a600!important;box-shadow:0 0 0 3px rgba(247,166,0,.09)}
+.input-unit input{background:transparent!important;border:0!important;box-shadow:none!important}
+.input-unit span{font-weight:800;color:#12226c!important;background:#f1f4fa!important;padding:0 11px!important}
+.dimensions-field{grid-column:1/-1;margin:0}
+.field-title{display:block;color:#12226c;font-size:13px;font-weight:800;margin-bottom:11px}
+.dimensions-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.dimensions-grid label{font-size:11px;font-weight:700;color:#66748b}
+.dimensions-grid .input-unit{margin-top:6px}
+.cubagem-info{display:flex;margin-top:12px;padding:10px 12px;border-radius:10px;background:#fff8e9;color:#745500;border:1px solid #f4dfad;font-size:11px;line-height:1.45}
+.optional-fees{margin-top:18px!important;padding:15px!important;border:1px solid #e7ebf3!important;border-radius:16px!important;background:#f8faff!important;box-shadow:0 6px 18px rgba(18,34,108,.035)}
+.optional-fees .check{border:1px solid #e1e6ef;background:#fff;border-radius:10px;padding:10px 12px;transition:.2s}
+.optional-fees .check:hover{border-color:#f0c66e;background:#fffdf8}
+.optional-fees .check:has(input:checked){border-color:#f7a600;background:#fff9ed;box-shadow:0 0 0 2px rgba(247,166,0,.08)}
+.quote-result{margin-top:22px!important;border-radius:18px!important;border:1px solid #e2e7f0!important;box-shadow:0 16px 40px rgba(18,34,108,.1)!important;overflow:hidden}
+@media(max-width:760px){.dimensions-grid{grid-template-columns:1fr}.form-grid>label,.dimensions-field{padding:13px}.optional-fees{padding:12px!important}}
