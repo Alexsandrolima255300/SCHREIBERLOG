@@ -29,12 +29,12 @@ function normalizeRoute(value){
 function getRouteKey(origin,destination){
   const o=normalizeRoute(origin);
   const d=normalizeRoute(destination);
-  const destinationUf=(d.match(/(?:^|[\\s/,-])(SP|SC)$/)||[])[1] || d;
+  const destinationUf=(d.match(/(?:^|[\s/,-])(SP|SC)$/)||[])[1] || d;
   return o+"|"+destinationUf;
 }
 
 function getUfFromCep(cep){
-  const d=String(cep||"").replace(/\\D/g,"");
+  const d=String(cep||"").replace(/\D/g,"");
   const prefix=Number(d.slice(0,2));
   if(prefix>=1 && prefix<=19) return "SP";
   if(prefix>=88 && prefix<=89) return "SC";
