@@ -14,41 +14,47 @@ const formatCnpj=v=>{
   return d.slice(0,2)+"."+d.slice(2,5)+"."+d.slice(5,8)+"/"+d.slice(8,12)+"-"+d.slice(12,14);
 };
 
-const cnpjInput=$("#cnpj");
-const cnpjStatus=$("#cnpjStatus");
-const companyInput=$("#companyName");
-cnpjInput?.addEventListener("input",e=>{e.target.value=formatCnpj(e.target.value);});
-
-$("#lookupCnpj")?.addEventListener("click",async()=>{
-  const cnpj=onlyDigits(cnpjInput?.value||"");
-  if(cnpj.length!==14){
-    if(cnpjStatus) cnpjStatus.innerHTML='<span class="status-error">Digite um CNPJ válido com 14 dígitos.</span>';
-    return;
-  }
-  const button=$("#lookupCnpj");
-  button.disabled=true;
-  button.textContent="Consultando...";
-  if(cnpjStatus) cnpjStatus.innerHTML='<span class="status-loading">Buscando dados na BrasilAPI...</span>';
-  try{
-    const response=await fetch("https://brasilapi.com.br/cnpj/v1/"+cnpj);
-    if(!response.ok) throw new Error(response.status===404?"CNPJ não encontrado.":"Não foi possível consultar o CNPJ.");
-    const data=await response.json();
-    if(companyInput) companyInput.value=data.razao_social||data.nome_fantasia||"";
-    if(cnpjStatus) cnpjStatus.innerHTML='<span class="status-success">✓ Empresa encontrada: '+(data.nome_fantasia||data.razao_social||"Cadastro localizado")+'</span>';
-    if(data.cep && $("#cep") && !$("#cep").value) $("#cep").value=formatCep(data.cep);
-  }catch(error){
-    if(cnpjStatus) cnpjStatus.innerHTML='<span class="status-error">'+(error.message||"Erro ao consultar CNPJ.")+'</span>';
-    if(companyInput) companyInput.value="";
-  }finally{
-    button.disabled=false;
-    button.textContent="Buscar CNPJ";
-  }
-});
-
-const formatCep=v=>{
-  const d=onlyDigits(v).slice(0,8);
-  return d.length>5?d.slice(0,5)+"-"+d.slice(5):d;
+const setupCnpjLookup=({inputId,buttonId,statusId,companyId,addressId,routeId,cepId,label})=>{
+  const input=$(inputId),button=$(buttonId),status=$(statusId),company=$(companyId),address=$(addressId);
+  input?.addEventListener("input",e=>{e.target.value=formatCnpj(e.target.value);});
+  button?.addEventListener("click",async()=>{
+    const cnpj=onlyDigits(input?.value||"");
+    if(cnpj.length!==14){
+      if(status) status.innerHTML='<span class="status-error">Digite os 14 dígitos do CNPJ.</span>';
+      return;
+    }
+    button.disabled=true; button.textContent="Consultando...";
+    if(status) status.innerHTML='<span class="status-loading">Buscando dados na BrasilAPI...</span>';
+    try{
+      const response=await fetch("https://brasilapi.com.br/cnpj/v1/"+cnpj);
+      if(!response.ok) throw new Error(response.status===404?"CNPJ não encontrado na base consultada.":"Não foi possível consultar este CNPJ agora.");
+      const data=await response.json();
+      const nome=data.razao_social||data.nome_fantasia||"";
+      const endereco=[data.logradouro,data.numero,data.complemento,data.bairro].filter(Boolean).join(", ");
+      const cidadeUf=[data.municipio,data.uf].filter(Boolean).join(" / ");
+      if(company) company.value=nome;
+      if(address) address.value=endereco;
+      if(routeId && $(routeId) && cidadeUf) $(routeId).value=cidadeUf;
+      if(cepId && $(cepId) && data.cep) $(cepId).value=formatCep(data.cep);
+      if(status) status.innerHTML='<span class="status-success">✓ '+label+' encontrado(a): '+nome+'</span>';
+    }catch(error){
+      if(status) status.innerHTML='<span class="status-error">'+(error.message||"Erro ao consultar CNPJ.")+'</span>';
+      if(company) company.value="";
+      if(address) address.value="";
+    }finally{
+      button.disabled=false; button.textContent="Buscar";
+    }
+  });
 };
+
+setupCnpjLookup({
+  inputId:"#senderCnpj",buttonId:"#lookupSenderCnpj",statusId:"#senderCnpjStatus",
+  companyId:"#senderCompany",addressId:"#senderAddress",routeId:"#origin",cepId:null,label:"Remetente"
+});
+setupCnpjLookup({
+  inputId:"#recipientCnpj",buttonId:"#lookupRecipientCnpj",statusId:"#recipientCnpjStatus",
+  companyId:"#recipientCompany",addressId:"#recipientAddress",routeId:"#destination",cepId:"#cep",label:"Destinatário"
+});
 
 const money=v=>window.SchreiberCalculator?.formatBRL(v)||"R$ 0,00";
 
