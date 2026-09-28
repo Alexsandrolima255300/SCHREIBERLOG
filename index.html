@@ -98,12 +98,26 @@
             <label>Quantidade de volumes
               <input id="volumes" type="number" min="1" step="1" required placeholder="1">
             </label>
+            <label>Volume total
+              <div class="input-unit"><input id="volumeM3" type="number" min="0" step="0.001" placeholder="0,000"><span>m³</span></div>
+            </label>
             <label>CEP de destino
               <input id="cep" inputmode="numeric" maxlength="9" placeholder="00000-000">
             </label>
           </div>
+          <div class="optional-fees">
+            <label class="check"><input id="trt" type="checkbox"> TRT (5%, mínimo R$ 5,00)</label>
+            <label class="check"><input id="tde" type="checkbox"> TDE</label>
+            <label class="check"><input id="tda" type="checkbox"> TDA</label>
+            <label class="check"><input id="tdc" type="checkbox"> TDC</label>
+            <label class="check"><input id="reentrega" type="checkbox"> Reentrega</label>
+            <label class="check"><input id="devolucao" type="checkbox"> Devolução</label>
+            <label class="check"><input id="tmr" type="checkbox"> TMR</label>
+            <label class="check"><input id="pallets" type="number" min="0" step="1" placeholder="Pallets"></label>
+            <label class="check"><input id="storageDays" type="number" min="0" step="1" placeholder="Dias armazenagem"></label>
+          </div>
           <div class="form-bottom">
-            <div class="secure-note">🔒 Seus dados ficam protegidos durante o envio.</div>
+            <div class="secure-note">🔒 Regras da tabela SBR de 26/08/2026. Taxas TDE/TDA/TDC dependem de cadastro/consulta.</div>
             <button class="btn btn-primary btn-lg" type="submit">Continuar cotação <span>→</span></button>
           </div>
           <div class="quote-result" id="quoteResult" hidden></div>
@@ -164,6 +178,7 @@
   </main>
 
   <footer><div class="container footer"><img src="https://sbr.log.br/img/logo.svg" alt="SchreiberLog"><span>Portal digital • SchreiberLog</span><span>© 2026</span></div></footer>
+  <script src="./calculator.js"></script>
   <script src="./script.js"></script>
 </body>
 </html>
