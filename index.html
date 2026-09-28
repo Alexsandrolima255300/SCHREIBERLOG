@@ -134,9 +134,22 @@
             <label>Quantidade de volumes
               <input id="volumes" type="number" min="1" step="1" required placeholder="1">
             </label>
-            <label>Volume total
-              <div class="input-unit"><input id="volumeM3" type="number" min="0" step="0.001" placeholder="0,000"><span>m³</span></div>
-            </label>
+            <div class="dimensions-field">
+              <span class="field-title">Dimensões da carga por volume</span>
+              <div class="dimensions-grid">
+                <label>Altura
+                  <div class="input-unit"><input id="heightCm" type="number" min="0" step="0.1" placeholder="0,0"><span>cm</span></div>
+                </label>
+                <label>Largura
+                  <div class="input-unit"><input id="widthCm" type="number" min="0" step="0.1" placeholder="0,0"><span>cm</span></div>
+                </label>
+                <label>Comprimento
+                  <div class="input-unit"><input id="lengthCm" type="number" min="0" step="0.1" placeholder="0,0"><span>cm</span></div>
+                </label>
+              </div>
+              <small id="cubagemInfo" class="cubagem-info">Cubagem calculada automaticamente a 300 kg/m³ conforme a tabela.</small>
+              <input id="volumeM3" type="hidden" value="0">
+            </div>
             <label>CEP de destino
               <input id="cep" inputmode="numeric" maxlength="9" placeholder="00000-000">
             </label>
