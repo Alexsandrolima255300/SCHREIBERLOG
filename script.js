@@ -120,6 +120,7 @@ $("#quoteForm")?.addEventListener("submit",e=>{
   const rows=[
     ["Frete base",result.baseFreight],["Frete valor (0,4% NF)",result.freteValor],
     ["GRIS (0,1% NF)",result.gris],["Pedágio",result.pedagio],
+    ["ICMS ("+((result.icmsRate||0)*100).toLocaleString("pt-BR",{maximumFractionDigits:2})+"% sobre o frete)",result.icms],
     ["TRT",result.trt],["TDE",result.tde],["TDA",result.tda],["TDC",result.tdc],
     ["Descarga",result.descarga],["Armazenagem",result.storage],["Paletização",result.palletization],
     ["TMR",result.tmr],["Reentrega",result.reentrega],["Devolução",result.devolucao]
@@ -132,7 +133,7 @@ $("#quoteForm")?.addEventListener("submit",e=>{
   box.innerHTML=
     '<div class="quote-summary"><div><small>PESO CONSIDERADO</small><b>'+result.billableWeight.toLocaleString("pt-BR",{maximumFractionDigits:3})+' kg</b></div><div><small>ROTA</small><b>'+origin+' → '+destination+'</b></div><div class="total"><small>FRETE ESTIMADO</small><b>'+money(result.total)+'</b></div></div>'+
     '<div class="quote-breakdown">'+rows+'</div>'+warningHtml+
-    '<div class="quote-note">Cálculo baseado na tabela contratual fornecida para Brasil Engrenagens. ICMS fica reservado para a próxima etapa e não altera o valor calculado nesta versão. TDE é identificado automaticamente pelo CNPJ do destinatário conforme a tabela de agosto/2026.</div>';
+    '<div class="quote-note">Cálculo baseado na tabela contratual fornecida para Brasil Engrenagens. ICMS: 18% para SP e 12% para SC, calculado sobre o valor do frete. GRIS: 0,1% sobre o valor da NF. TDE é identificado automaticamente pelo CNPJ do destinatário conforme a tabela de agosto/2026.</div>';
   box.scrollIntoView?.({behavior:"smooth",block:"nearest"});
 });
 
