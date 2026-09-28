@@ -83,16 +83,40 @@
         <form class="quote-card reveal" id="quoteForm">
           <div class="form-title"><div class="icon-box">↗</div><div><h3>Nova cotação</h3><span>Dados básicos da carga</span></div></div>
           <div class="cnpj-lookup">
-            <label>CNPJ do cliente
-              <div class="cnpj-row">
-                <input id="cnpj" inputmode="numeric" maxlength="18" placeholder="00.000.000/0000-00" autocomplete="off">
-                <button class="btn btn-primary" type="button" id="lookupCnpj">Buscar CNPJ</button>
+            <div class="cnpj-party-grid">
+              <div class="cnpj-party">
+                <div class="party-title"><b>Remetente</b><span>Empresa que envia a carga</span></div>
+                <label>CNPJ do remetente
+                  <div class="cnpj-row">
+                    <input id="senderCnpj" inputmode="numeric" maxlength="18" placeholder="00.000.000/0000-00" autocomplete="off">
+                    <button class="btn btn-primary" type="button" id="lookupSenderCnpj">Buscar</button>
+                  </div>
+                </label>
+                <div class="cnpj-status" id="senderCnpjStatus" aria-live="polite"></div>
+                <label>Empresa
+                  <input id="senderCompany" type="text" placeholder="Preenchido automaticamente" readonly>
+                </label>
+                <label>Endereço
+                  <input id="senderAddress" type="text" placeholder="Preenchido automaticamente" readonly>
+                </label>
               </div>
-            </label>
-            <div class="cnpj-status" id="cnpjStatus" aria-live="polite"></div>
-            <label class="company-field">Empresa
-              <input id="companyName" type="text" placeholder="Nome da empresa" readonly>
-            </label>
+              <div class="cnpj-party">
+                <div class="party-title"><b>Destinatário</b><span>Empresa que recebe a carga</span></div>
+                <label>CNPJ do destinatário
+                  <div class="cnpj-row">
+                    <input id="recipientCnpj" inputmode="numeric" maxlength="18" placeholder="00.000.000/0000-00" autocomplete="off">
+                    <button class="btn btn-primary" type="button" id="lookupRecipientCnpj">Buscar</button>
+                  </div>
+                </label>
+                <div class="cnpj-status" id="recipientCnpjStatus" aria-live="polite"></div>
+                <label>Empresa
+                  <input id="recipientCompany" type="text" placeholder="Preenchido automaticamente" readonly>
+                </label>
+                <label>Endereço
+                  <input id="recipientAddress" type="text" placeholder="Preenchido automaticamente" readonly>
+                </label>
+              </div>
+            </div>
           </div>
           <div class="form-grid">
             <label>Origem
