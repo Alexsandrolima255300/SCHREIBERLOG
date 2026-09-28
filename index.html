@@ -82,6 +82,18 @@
         </div>
         <form class="quote-card reveal" id="quoteForm">
           <div class="form-title"><div class="icon-box">↗</div><div><h3>Nova cotação</h3><span>Dados básicos da carga</span></div></div>
+          <div class="cnpj-lookup">
+            <label>CNPJ do cliente
+              <div class="cnpj-row">
+                <input id="cnpj" inputmode="numeric" maxlength="18" placeholder="00.000.000/0000-00" autocomplete="off">
+                <button class="btn btn-primary" type="button" id="lookupCnpj">Buscar CNPJ</button>
+              </div>
+            </label>
+            <div class="cnpj-status" id="cnpjStatus" aria-live="polite"></div>
+            <label class="company-field">Empresa
+              <input id="companyName" type="text" placeholder="Nome da empresa" readonly>
+            </label>
+          </div>
           <div class="form-grid">
             <label>Origem
               <input id="origin" required placeholder="Cidade / UF">
