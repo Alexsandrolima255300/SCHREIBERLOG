@@ -11,8 +11,9 @@ async function getSchreiberCepData(){
 }
 window.getSchreiberCepData=getSchreiberCepData;
 window.findSchreiberCep=async function(origin,cep){
- const d=String(cep||"").replace(/\\D/g,""); if(d.length!==8)return null;
- const rows=await getSchreiberCepData();
- const o=String(origin||"").toUpperCase();
- return rows.find(r=>r[0]===o && Number(d)>=r[2] && Number(d)<=r[3])||null;
+ const d=String(cep||"").replace(/\D/g,""); if(d.length!==8)return null;
+ const rows=await getSchreiberCepData(); const o=String(origin||"").toUpperCase();
+ const idx={SC:6,SP1:7,SP2:8,SP3:9}[o]; if(idx==null)return null;
+ const r=rows.find(x=>Number(d)>=x[2] && Number(d)<=x[3]);
+ return r ? {city:r[0],uf:r[1],cepInitial:r[2],cepFinal:r[3],tariff:r[4],branch:r[5],prazo:r[idx]} : null;
 };
