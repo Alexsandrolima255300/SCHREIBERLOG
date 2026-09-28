@@ -62,3 +62,5 @@
   .cnpj-row{gap:9px}
   .cnpj-row input{width:100%}
 }
+
+.cnpj-party-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.cnpj-party{padding:18px;border:1px solid #e3e9f1;border-radius:14px;background:#fff}.party-title{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:14px}.party-title b{font-size:14px;color:#12226c}.party-title span{font-size:10px;color:#8996a8}.cnpj-party label{margin-top:11px}.cnpj-party label:first-of-type{margin-top:0}.cnpj-party input[readonly]{background:#f8fafc}.cnpj-party .cnpj-row input{min-width:0}.cnpj-party .cnpj-row .btn{padding-left:15px;padding-right:15px}@media(max-width:760px){.cnpj-party-grid{grid-template-columns:1fr}}
