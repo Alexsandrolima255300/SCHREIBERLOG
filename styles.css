@@ -301,10 +301,12 @@
   .quote-result{display:block!important;margin:0!important;padding:24px!important;background:#fff!important;border:1px solid #d7dee8!important;color:#17253d!important;box-shadow:none!important}
   .quote-result .quote-summary{display:grid!important;background:#f5f7fa!important;border:1px solid #dfe5ed!important}
   .quote-result .quote-breakdown{display:block!important;background:#fff!important}
-  .quote-result .quote-breakdown .quote-row:not(:last-child){display:none!important}
-  .quote-result .quote-breakdown .quote-row:last-child{display:flex!important}
+  .quote-result .quote-summary>div:first-child{display:none!important}
+  .quote-result .quote-summary>div:nth-child(2){display:flex!important}
+  .quote-result .quote-summary>div:nth-child(2) small:before{content:"ORIGEM / DESTINO"}
+  .quote-result .quote-summary>div:nth-child(2) small{font-size:0}
   .quote-result .quote-breakdown:before{content:"Base de cálculo";display:block;font-size:15px;font-weight:800;color:#12226c;margin:0 0 10px}
-  .quote-result .quote-breakdown .quote-row:last-child:before{content:"Valor final da cotação";font-weight:700;color:#17253d}
+  .quote-result .quote-note,.quote-result .quote-warning{display:none!important}
   .quote-result .quote-note{color:#52617a!important}
   .quote-actions{display:none!important}
   .quote-row{display:flex!important;justify-content:space-between!important;border-bottom:1px solid #e5e9ef!important;padding:9px 0!important}
