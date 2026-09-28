@@ -74,7 +74,7 @@ const setupCnpjLookup=({inputId,buttonId,statusId,companyId,addressId,routeId,ce
 
 setupCnpjLookup({
   inputId:"#senderCnpj",buttonId:"#lookupSenderCnpj",statusId:"#senderCnpjStatus",
-  companyId:"#senderCompany",addressId:"#senderAddress",routeId:"#origin",cepId:null,label:"Remetente"
+  companyId:"#senderCompany",addressId:"#senderAddress",routeId:"#origin",cepId:"#senderCep",label:"Remetente"
 });
 setupCnpjLookup({
   inputId:"#recipientCnpj",buttonId:"#lookupRecipientCnpj",statusId:"#recipientCnpjStatus",
@@ -82,6 +82,23 @@ setupCnpjLookup({
 });
 
 const money=v=>window.SchreiberCalculator?.formatBRL(v)||"R$ 0,00";
+const normalizeCep=v=>String(v||"").replace(/\\D/g,"").slice(0,8);
+const formatCepInput=v=>{const d=normalizeCep(v);return d.length>5?d.slice(0,5)+"-"+d.slice(5):d;};
+const resolveCep=(cep,target)=>{
+  const clean=normalizeCep(cep);
+  if(clean.length!==8)return;
+  fetch("https://viacep.com.br/ws/"+clean+"/json/")
+    .then(r=>r.json())
+    .then(data=>{
+      if(data.erro)return;
+      const cityUf=[data.localidade,data.uf].filter(Boolean).join(" / ");
+      if(target && $(target)) $(target).value=cityUf;
+    }).catch(()=>{});
+};
+["#senderCep","#cep"].forEach(sel=>$(sel)?.addEventListener("input",e=>{e.target.value=formatCepInput(e.target.value);}));
+$("#senderCep")?.addEventListener("blur",e=>resolveCep(e.target.value,"#origin"));
+$("#cep")?.addEventListener("blur",e=>resolveCep(e.target.value,"#destination"));
+
 const parseBRL=v=>{
   if(typeof v==="number") return v;
   const raw=String(v||"").trim().replace(/R\$\s?/g,"").replace(/\./g,"").replace(",",".");
@@ -97,7 +114,7 @@ const formatInputBRL=v=>{
 
 $("#quoteForm")?.addEventListener("submit",e=>{
   e.preventDefault();
-  const origin=$("#origin").value.trim(), destination=$("#destination").value.trim();
+  const origin=$("#origin").value.trim(), destination=$("#destination").value.trim(), originCep=normalizeCep($("#senderCep")?.value), destinationCep=normalizeCep($("#cep")?.value);
   const weight=Number($("#weight").value||0), invoice=parseBRL($("#invoice").value), volumes=Number($("#volumes").value||0);
   const heightCm=Number($("#heightCm")?.value||0);
   const widthCm=Number($("#widthCm")?.value||0);
@@ -106,10 +123,10 @@ $("#quoteForm")?.addEventListener("submit",e=>{
   const volumePerUnitM3=(heightCm*widthCm*lengthCm)/1000000;
   const volumeM3=volumePerUnitM3*volumesForCubage;
   $("#volumeM3").value=volumeM3.toFixed(6);
-  if(!origin||!destination||weight<=0||invoice<0||volumes<1)return;
+  if(!origin||!destination||originCep.length!==8||destinationCep.length!==8||weight<=0||invoice<0||volumes<1)return;
 
   const result=window.SchreiberCalculator.calculateSchreiberQuote({
-    origin,destination,weight,invoice,volumes,volumeM3,lengthCm,
+    origin,destination,originCep,destinationCep,weight,invoice,volumes,volumeM3,lengthCm,
     trt:$("#trt")?.checked,tde:$("#tde")?.checked,tdeValue:Number($("#tde")?.dataset.tdeMinimum||0),tda:$("#tda")?.checked,tdc:$("#tdc")?.checked,
     reentrega:$("#reentrega")?.checked,devolucao:$("#devolucao")?.checked,tmr:$("#tmr")?.checked || lengthCm>300,
     pallets:Number($("#pallets")?.value||0),storageDays:Number($("#storageDays")?.value||0)
@@ -132,7 +149,7 @@ $("#quoteForm")?.addEventListener("submit",e=>{
 
   const printableQuote={
     generatedAt:new Date().toLocaleString("pt-BR"),
-    origin,destination,weight,invoice,volumes,heightCm,widthCm,lengthCm,result
+    origin,destination,originCep,destinationCep,weight,invoice,volumes,heightCm,widthCm,lengthCm,result
   };
   window.__schreiberLastQuote=printableQuote;
 
