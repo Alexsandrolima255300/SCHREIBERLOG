@@ -3,7 +3,7 @@ const menuBtn=$("#menuBtn"),mobileNav=$("#mobileNav");
 menuBtn?.addEventListener("click",()=>{mobileNav.style.display=mobileNav.style.display==="block"?"none":"block"});
 document.querySelectorAll(".mobile-nav a").forEach(a=>a.addEventListener("click",()=>mobileNav.style.display="none"));
 
-const onlyDigits=v=>v.replace(/\\D/g,"");
+const onlyDigits=v=>v.replace(/\D/g,"");
 
 const formatCnpj=v=>{
   const d=onlyDigits(v).slice(0,14);
