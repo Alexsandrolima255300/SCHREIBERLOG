@@ -94,6 +94,16 @@
                   <input id="senderCep" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="postal-code" required>
                   <small>CEP usado para definir a coleta.</small>
                 </label>
+                <label>Origem operacional
+                  <select id="originRegion" required>
+                    <option value="">Selecione a região de coleta</option>
+                    <option value="SC">SC</option>
+                    <option value="SP1">SP1</option>
+                    <option value="SP2">SP2</option>
+                    <option value="SP3">SP3</option>
+                  </select>
+                  <small>As planilhas fornecidas trabalham com SC, SP1, SP2 e SP3.</small>
+                </label>
               </div>
               <div class="cnpj-party">
                 <div class="party-title"><b>Destinatário</b><span>Empresa que recebe a carga</span></div>
@@ -252,6 +262,7 @@
 
   <footer><div class="container footer"><img src="https://sbr.log.br/img/logo.svg" alt="SchreiberLog"><span>Portal digital • SchreiberLog</span><span>© 2026</span></div></footer>
   <script src="./calculator.js"></script>
+  <script src="./city-data.js"></script>
   <script src="./tde-data.js"></script>
   <script src="./script.js"></script>
 </body>
