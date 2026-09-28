@@ -46,6 +46,7 @@ function calculateSchreiberQuote(input={}){
   const invoice=Math.max(0, Number(input.invoice)||0);
   const volumes=Math.max(1, Math.floor(Number(input.volumes)||1));
   const totalM3=Math.max(0, Number(input.volumeM3)||0);
+  const lengthCm=Math.max(0, Number(input.lengthCm)||0);
   const volumetricWeight=totalM3*SCHREIBER_RULES.densityKgM3;
   const billableWeight=Math.max(actualWeight, volumetricWeight);
 
@@ -79,7 +80,7 @@ function calculateSchreiberQuote(input={}){
   const storageDays=Math.max(0, Math.floor(Number(input.storageDays)||0));
   const storage=storageDays>0 ? Math.max(originalComposition*SCHREIBER_RULES.storageRatePerDay,SCHREIBER_RULES.storageMinimumPerDay)*storageDays : 0;
   const palletization=Math.max(0, Math.floor(Number(input.pallets)||0))*SCHREIBER_RULES.palletizationPerPallet;
-  const tmr=input.tmr ? SCHREIBER_RULES.tmrPerCte : 0;
+  const tmr=(input.tmr || lengthCm>300) ? SCHREIBER_RULES.tmrPerCte : 0;
 
   const reentrega=input.reentrega ? originalComposition*(input.tde ? 1 : SCHREIBER_RULES.reentregaRate) : 0;
   const devolucao=input.devolucao ? originalComposition*SCHREIBER_RULES.devolucaoRate : 0;
@@ -87,12 +88,13 @@ function calculateSchreiberQuote(input={}){
   const total=originalComposition+trt+tde+tda+tdc+descarga+storage+palletization+tmr+reentrega+devolucao;
 
   if(input.tde && !tde) warnings.push("TDE marcado, mas nenhum valor de TDE foi informado/configurado.");
+  if(lengthCm>300) warnings.push("TMR automático: material com comprimento superior a 3 metros.");
   if(input.tda && !tda) warnings.push("TDA marcado, mas nenhum valor de TDA foi informado/configurado.");
   if(input.tdc && !tdc) warnings.push("TDC marcado, mas nenhum valor de TDC foi informado/configurado.");
   if(!route) warnings.push("A tabela fornecida possui tarifas para SP3→SP e SP3→SC; outras rotas precisam de tabela específica do cliente.");
 
   return {
-    route:key, actualWeight, volumetricWeight, billableWeight, invoice, volumes,
+    route:key, actualWeight, volumetricWeight, billableWeight, invoice, volumes, lengthCm,
     baseFreight:round2(baseFreight), freteValor:round2(freteValor), gris:round2(gris),
     pedagio:round2(pedagio), trt:round2(trt), tde:round2(tde), tda:round2(tda),
     tdc:round2(tdc), descarga:round2(descarga), storage:round2(storage),
