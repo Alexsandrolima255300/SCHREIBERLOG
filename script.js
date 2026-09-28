@@ -76,7 +76,13 @@ $("#quoteForm")?.addEventListener("submit",e=>{
   e.preventDefault();
   const origin=$("#origin").value.trim(), destination=$("#destination").value.trim();
   const weight=Number($("#weight").value||0), invoice=parseBRL($("#invoice").value), volumes=Number($("#volumes").value||0);
-  const volumeM3=Number($("#volumeM3")?.value||0);
+  const heightCm=Number($("#heightCm")?.value||0);
+  const widthCm=Number($("#widthCm")?.value||0);
+  const lengthCm=Number($("#lengthCm")?.value||0);
+  const volumesForCubage=Math.max(1,volumes);
+  const volumePerUnitM3=(heightCm*widthCm*lengthCm)/1000000;
+  const volumeM3=volumePerUnitM3*volumesForCubage;
+  $("#volumeM3").value=volumeM3.toFixed(6);
   if(!origin||!destination||weight<=0||invoice<0||volumes<1)return;
 
   const result=window.SchreiberCalculator.calculateSchreiberQuote({
@@ -106,6 +112,19 @@ $("#quoteForm")?.addEventListener("submit",e=>{
     '<div class="quote-note">Cálculo baseado na tabela contratual fornecida para Brasil Engrenagens. ICMS não foi incluído, conforme regra da tabela. TDE/TDA/TDC só entram com valor cadastrado.</div>';
   box.scrollIntoView?.({behavior:"smooth",block:"nearest"});
 });
+
+const updateCubage=()=>{
+  const h=Number($("#heightCm")?.value||0),w=Number($("#widthCm")?.value||0),l=Number($("#lengthCm")?.value||0);
+  const qty=Math.max(1,Number($("#volumes")?.value||1));
+  const m3=(h*w*l/1000000)*qty;
+  const cubed=m3*300;
+  if($("#volumeM3")) $("#volumeM3").value=m3.toFixed(6);
+  if($("#cubagemInfo")) $("#cubagemInfo").textContent=m3>0
+    ? "Cubagem: "+m3.toLocaleString("pt-BR",{minimumFractionDigits:3,maximumFractionDigits:3})+" m³ • Peso cubado: "+cubed.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})+" kg • 300 kg/m³"
+    : "Cubagem calculada automaticamente a 300 kg/m³ conforme a tabela.";
+};
+["#heightCm","#widthCm","#lengthCm","#volumes"].forEach(sel=>$(sel)?.addEventListener("input",updateCubage));
+updateCubage();
 
 $("#invoice")?.addEventListener("input",e=>{e.target.value=formatInputBRL(e.target.value);});
 
