@@ -114,7 +114,7 @@ const formatInputBRL=v=>{
 
 $("#quoteForm")?.addEventListener("submit",e=>{
   e.preventDefault();
-  const origin=$("#origin").value.trim(), destination=$("#destination").value.trim(), originCep=normalizeCep($("#senderCep")?.value), destinationCep=normalizeCep($("#cep")?.value);
+  const origin=$("#origin").value.trim(), destination=$("#destination").value.trim(), originCep=normalizeCep($("#senderCep")?.value), destinationCep=normalizeCep($("#cep")?.value), originRegion=$("#originRegion")?.value||"";
   const weight=Number($("#weight").value||0), invoice=parseBRL($("#invoice").value), volumes=Number($("#volumes").value||0);
   const heightCm=Number($("#heightCm")?.value||0);
   const widthCm=Number($("#widthCm")?.value||0);
@@ -123,10 +123,12 @@ $("#quoteForm")?.addEventListener("submit",e=>{
   const volumePerUnitM3=(heightCm*widthCm*lengthCm)/1000000;
   const volumeM3=volumePerUnitM3*volumesForCubage;
   $("#volumeM3").value=volumeM3.toFixed(6);
-  if(!origin||!destination||originCep.length!==8||destinationCep.length!==8||weight<=0||invoice<0||volumes<1)return;
+  if(!origin||!destination||!originRegion||originCep.length!==8||destinationCep.length!==8||weight<=0||invoice<0||volumes<1)return;
 
+  let service=null;
+  if(window.findSchreiberCep){ try{ service=await window.findSchreiberCep(originRegion,destinationCep); }catch(_){ service=null; } }
   const result=window.SchreiberCalculator.calculateSchreiberQuote({
-    origin,destination,originCep,destinationCep,weight,invoice,volumes,volumeM3,lengthCm,
+    origin:originRegion,destination,originCep,destinationCep,weight,invoice,volumes,volumeM3,lengthCm,
     trt:$("#trt")?.checked,tde:$("#tde")?.checked,tdeValue:Number($("#tde")?.dataset.tdeMinimum||0),tda:$("#tda")?.checked,tdc:$("#tdc")?.checked,
     reentrega:$("#reentrega")?.checked,devolucao:$("#devolucao")?.checked,tmr:$("#tmr")?.checked || lengthCm>300,
     pallets:Number($("#pallets")?.value||0),storageDays:Number($("#storageDays")?.value||0)
@@ -143,18 +145,19 @@ $("#quoteForm")?.addEventListener("submit",e=>{
     ["TMR",result.tmr],["Reentrega",result.reentrega],["Devolução",result.devolucao]
   ].filter(([,v])=>v>0).map(([label,v])=>'<div class="quote-row"><span>'+label+'</span><b>'+money(v)+'</b></div>').join("");
 
+  if(!service) result.warnings.push("CEP de destino não encontrado na matriz da origem selecionada.");
   const warningHtml=result.warnings.length
     ? '<div class="quote-warning"><b>Atenção:</b><ul>'+result.warnings.map(w=>'<li>'+w+'</li>').join("")+'</ul></div>'
     : "";
 
   const printableQuote={
     generatedAt:new Date().toLocaleString("pt-BR"),
-    origin,destination,originCep,destinationCep,weight,invoice,volumes,heightCm,widthCm,lengthCm,result
+    origin,destination,originCep,destinationCep,originRegion,service,weight,invoice,volumes,heightCm,widthCm,lengthCm,result
   };
   window.__schreiberLastQuote=printableQuote;
 
   box.innerHTML=
-    '<div class="quote-summary"><div><small>PESO CONSIDERADO</small><b>'+result.billableWeight.toLocaleString("pt-BR",{maximumFractionDigits:3})+' kg</b></div><div><small>ROTA</small><b>'+origin+' → '+destination+'</b></div><div class="total"><small>FRETE ESTIMADO</small><b>'+money(result.total)+'</b></div></div>'+
+    '<div class="quote-summary"><div><small>ORIGEM OPERACIONAL</small><b>'+originRegion+'</b></div><div><small>ATENDIMENTO</small><b>'+(service?service[5]+" • "+service[6]+" dia(s)":"CEP não localizado")+'</b></div><div><small>PESO CONSIDERADO</small><b>'+result.billableWeight.toLocaleString("pt-BR",{maximumFractionDigits:3})+' kg</b></div><div><small>ROTA</small><b>'+origin+' → '+destination+'</b></div><div class="total"><small>FRETE ESTIMADO</small><b>'+money(result.total)+'</b></div></div>'+
     '<div class="quote-breakdown">'+rows+'</div>'+warningHtml+
     '<div class="quote-note">Cálculo baseado na tabela contratual fornecida para Brasil Engrenagens. ICMS: 18% para SP e 12% para SC, calculado sobre o valor do frete. GRIS: 0,1% sobre o valor da NF. TDE é identificado automaticamente pelo CNPJ do destinatário conforme a tabela de agosto/2026.</div>'+
     '<div class="quote-actions"><button class="btn btn-primary" type="button" id="downloadQuoteBtn">Baixar cotação em PDF</button><button class="btn btn-ghost" type="button" id="printQuoteBtn">Imprimir</button></div>';
