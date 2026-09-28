@@ -33,9 +33,17 @@ function getRouteKey(origin,destination){
   return o+"|"+destinationUf;
 }
 
-function getDestinationUf(destination){
+function getUfFromCep(cep){
+  const d=String(cep||"").replace(/\\D/g,"");
+  const prefix=Number(d.slice(0,2));
+  if(prefix>=1 && prefix<=19) return "SP";
+  if(prefix>=88 && prefix<=89) return "SC";
+  return "";
+}
+
+function getDestinationUf(destination,cep){
   const d=normalizeRoute(destination);
-  return (d.match(/(?:^|[\\s/,-])(SP|SC)$/)||[])[1] || (d==="SP"||d==="SC"?d:"");
+  return getUfFromCep(cep) || (d.match(/(?:^|[\\s/,-])(SP|SC)$/)||[])[1] || (d==="SP"||d==="SC"?d:"");
 }
 
 function getBandIndex(weight){
@@ -80,7 +88,7 @@ function calculateSchreiberQuote(input={}){
   const pedagio=billableWeight>0 ? Math.ceil(billableWeight/100)*SCHREIBER_RULES.pedágioPer100Kg : 0;
 
   const originalComposition=baseFreight+freteValor+gris+pedagio;
-  const destinationUf=getDestinationUf(input.destination);
+  const destinationUf=getDestinationUf(input.destination,input.destinationCep);
   const icmsRate=SCHREIBER_RULES.icmsRates[destinationUf] || 0;
   const icms=originalComposition*icmsRate;
   const trt=input.trt ? Math.max(originalComposition*SCHREIBER_RULES.trtRate,SCHREIBER_RULES.trtMinimum) : 0;
@@ -106,7 +114,7 @@ function calculateSchreiberQuote(input={}){
   if(!route) warnings.push("A tabela fornecida possui tarifas para SP3→SP e SP3→SC; outras rotas precisam de tabela específica do cliente.");
 
   return {
-    route:key, actualWeight, volumetricWeight, billableWeight, invoice, volumes, lengthCm,
+    route:key, originCep:String(input.originCep||"").replace(/\\D/g,""), destinationCep:String(input.destinationCep||"").replace(/\\D/g,""), destinationUf, actualWeight, volumetricWeight, billableWeight, invoice, volumes, lengthCm,
     baseFreight:round2(baseFreight), freteValor:round2(freteValor), gris:round2(gris),
     pedagio:round2(pedagio), icmsRate, icms:round2(icms), trt:round2(trt), tde:round2(tde), tda:round2(tda),
     tdc:round2(tdc), descarga:round2(descarga), storage:round2(storage),
