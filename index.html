@@ -128,8 +128,12 @@
             <label>Peso da carga
               <div class="input-unit"><input id="weight" type="number" min="0.01" step="0.01" required placeholder="0,00"><span>kg</span></div>
             </label>
-            <label>Valor da NF
-              <div class="input-unit"><span>R$</span><input id="invoice" type="text" inputmode="decimal" autocomplete="off" required placeholder="0,00"></div>
+            <label class="invoice-field">Valor da NF
+              <div class="money-input">
+                <span class="money-prefix">R$</span>
+                <input id="invoice" type="text" inputmode="decimal" autocomplete="off" required placeholder="0,00" aria-label="Valor da Nota Fiscal">
+              </div>
+              <small>Informe o valor total da Nota Fiscal</small>
             </label>
             <label>Quantidade de volumes
               <input id="volumes" type="number" min="1" step="1" required placeholder="1">
