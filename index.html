@@ -90,6 +90,10 @@
                 <label>Endereço
                   <input id="senderAddress" type="text" placeholder="Preenchido automaticamente" readonly>
                 </label>
+                <label>CEP de coleta
+                  <input id="senderCep" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="postal-code" required>
+                  <small>CEP usado para definir a coleta.</small>
+                </label>
               </div>
               <div class="cnpj-party">
                 <div class="party-title"><b>Destinatário</b><span>Empresa que recebe a carga</span></div>
@@ -107,15 +111,19 @@
                 <label>Endereço
                   <input id="recipientAddress" type="text" placeholder="Preenchido automaticamente" readonly>
                 </label>
+                <label>CEP de destino
+                  <input id="cep" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="postal-code" required>
+                  <small>CEP usado para definir o destino.</small>
+                </label>
               </div>
             </div>
           </div>
           <div class="form-grid">
             <label>Origem
-              <input id="origin" required placeholder="Cidade / UF">
+              <input id="origin" required placeholder="Cidade / UF" readonly>
             </label>
             <label>Destino
-              <input id="destination" required placeholder="Cidade / UF">
+              <input id="destination" required placeholder="Cidade / UF" readonly>
             </label>
             <label>Peso da carga
               <div class="input-unit"><input id="weight" type="number" min="0.01" step="0.01" required placeholder="0,00"><span>kg</span></div>
