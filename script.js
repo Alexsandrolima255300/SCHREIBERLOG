@@ -59,11 +59,23 @@ setupCnpjLookup({
 });
 
 const money=v=>window.SchreiberCalculator?.formatBRL(v)||"R$ 0,00";
+const parseBRL=v=>{
+  if(typeof v==="number") return v;
+  const raw=String(v||"").trim().replace(/R\\$\\s?/g,"").replace(/\\./g,"").replace(",",".");
+  const n=Number(raw);
+  return Number.isFinite(n)?n:0;
+};
+const formatInputBRL=v=>{
+  const digits=String(v||"").replace(/\\D/g,"");
+  if(!digits) return "";
+  const cents=Number(digits)/100;
+  return cents.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+};
 
 $("#quoteForm")?.addEventListener("submit",e=>{
   e.preventDefault();
   const origin=$("#origin").value.trim(), destination=$("#destination").value.trim();
-  const weight=Number($("#weight").value||0), invoice=Number($("#invoice").value||0), volumes=Number($("#volumes").value||0);
+  const weight=Number($("#weight").value||0), invoice=parseBRL($("#invoice").value), volumes=Number($("#volumes").value||0);
   const volumeM3=Number($("#volumeM3")?.value||0);
   if(!origin||!destination||weight<=0||invoice<0||volumes<1)return;
 
@@ -94,6 +106,8 @@ $("#quoteForm")?.addEventListener("submit",e=>{
     '<div class="quote-note">Cálculo baseado na tabela contratual fornecida para Brasil Engrenagens. ICMS não foi incluído, conforme regra da tabela. TDE/TDA/TDC só entram com valor cadastrado.</div>';
   box.scrollIntoView?.({behavior:"smooth",block:"nearest"});
 });
+
+$("#invoice")?.addEventListener("input",e=>{e.target.value=formatInputBRL(e.target.value);});
 
 $("#cep")?.addEventListener("input",e=>{
   let v=e.target.value.replace(/\D/g,"").slice(0,8);
