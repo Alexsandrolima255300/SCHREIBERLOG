@@ -274,3 +274,12 @@
   .hero-banner{height:430px;border-radius:22px}
   .hero-banner-badge{left:12px;bottom:12px;font-size:9px}
 }
+
+
+/* Indicador do TDE automático */
+.tde-status{margin-top:8px;min-height:18px;font-size:12px;font-weight:700}
+.tde-status .status-success{color:#1b7f4b}
+.tde-status .status-loading{color:#12226c}
+.tde-status .status-muted{color:#6b7280}
+.tde-status .status-error{color:#b42318}
+.optional-fees .check input:disabled{opacity:.72;cursor:not-allowed}
