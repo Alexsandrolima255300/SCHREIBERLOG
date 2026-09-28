@@ -154,3 +154,49 @@
   .form-bottom .btn{width:100%}
   .quote-result{margin-left:16px!important;margin-right:16px!important}
 }
+
+/* Correção visual: manter a paleta original do SchreiberLog */
+.quote-section{background:#f6f8fb!important;padding:105px 0!important}
+.quote-section .section-heading{color:#10213d!important}
+.quote-section .section-heading h2{color:#10213d!important}
+.quote-section .section-heading p{color:#6a7890!important}
+.quote-card{background:#fff!important;border:1px solid #e3e9f1!important;border-radius:24px!important;box-shadow:0 22px 60px rgba(20,47,82,.08)!important;padding:30px!important;overflow:visible!important}
+.quote-card .form-title{padding:0;border:0;color:#10213d}
+.quote-card .form-title h3{color:#10213d}
+.quote-card .form-title span{color:#8996a8}
+.quote-card .cnpj-lookup{margin-bottom:22px!important;padding:18px!important;border:1px solid #e3e9f1!important;border-radius:14px!important;background:#f8faff!important;box-shadow:0 12px 30px rgba(18,34,108,.06)!important}
+.cnpj-party{background:#fff!important;border:1px solid #e7ebf3!important;box-shadow:0 6px 18px rgba(18,34,108,.045)!important}
+.party-title{border-bottom:1px solid #edf0f6!important}
+.party-title b{color:#12226c!important}
+.party-title span{color:#7d899c!important}
+.cnpj-party input,.cnpj-row input,.form-grid>label>input,.dimensions-field input,.input-unit{background:#fff!important;border-color:#dfe5ef!important;color:#122540!important}
+.cnpj-party input[readonly]{background:#f8fafc!important;color:#122540!important}
+.cnpj-party input::placeholder,.cnpj-row input::placeholder,.form-grid input::placeholder{color:#9aa7b8!important}
+.cnpj-row input:focus,.cnpj-party input:focus,.form-grid input:focus,.input-unit:focus-within{border-color:#f7a600!important;box-shadow:0 0 0 4px rgba(247,166,0,.11)!important}
+.cnpj-row .btn{background:#f7a600!important;color:#12226c!important}
+.form-grid{margin:0!important;padding:0!important;border-top:0!important;grid-template-columns:repeat(3,1fr)!important}
+.form-grid>label,.dimensions-field{background:#fff!important;border:1px solid #e7ebf3!important;color:#52617a!important;box-shadow:0 5px 16px rgba(18,34,108,.035)!important}
+.form-grid>label:focus-within,.dimensions-field:focus-within{border-color:#d6b45e!important;box-shadow:0 8px 22px rgba(18,34,108,.07),0 0 0 3px rgba(247,166,0,.07)!important}
+.field-title{color:#12226c!important}
+.cubagem-info{background:#fff8e9!important;border-color:#f4dfad!important;color:#745500!important}
+.input-unit span{background:transparent!important;color:#8b98aa!important}
+.optional-fees{margin-top:18px!important;margin-left:0!important;margin-right:0!important;background:#f8faff!important;border:1px solid #e7ebf3!important}
+.optional-fees .check{background:#fff!important;border-color:#e1e6ef!important;color:#52617a!important}
+.optional-fees .check:hover{border-color:#f0c66e!important;background:#fffdf8!important}
+.optional-fees .check:has(input:checked){background:#fff9ed!important;border-color:#f7a600!important;color:#10213d!important}
+.form-bottom{margin-top:27px!important;padding:0!important;background:transparent!important;border:0!important;border-radius:0!important}
+.secure-note{color:#8190a4!important}
+.btn-primary,.form-bottom .btn-primary{background:#12226c!important;color:#fff!important}
+.btn-primary:hover{background:#0d194f!important}
+.quote-result{margin-top:18px!important;margin-left:0!important;margin-right:0!important;background:#eef7ff!important;border:1px solid #d3e8ff!important;color:#1e527e!important}
+.quote-result .quote-summary,.quote-result .quote-breakdown{background:transparent!important}
+.quote-result .quote-note{color:#1e527e!important}
+@media(max-width:760px){
+ .quote-section{padding:70px 0!important}
+ .quote-card{padding:18px!important}
+ .quote-card .form-title{padding:0!important}
+ .quote-card .cnpj-lookup{padding:14px!important}
+ .form-grid{grid-template-columns:1fr!important}
+ .optional-fees{margin-left:0!important;margin-right:0!important}
+ .form-bottom{padding:0!important;flex-direction:column;align-items:stretch}
+}
