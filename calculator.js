@@ -5,6 +5,7 @@ const SCHREIBER_RULES = Object.freeze({
   densityKgM3: 300,
   freteValorRate: 0.004,
   grisRate: 0.001,
+  icmsRates: { SP: 0.18, SC: 0.12 },
   pedágioPer100Kg: 4,
   trtRate: 0.05,
   trtMinimum: 5,
@@ -26,7 +27,15 @@ function normalizeRoute(value){
 }
 
 function getRouteKey(origin,destination){
-  return normalizeRoute(origin)+"|"+normalizeRoute(destination);
+  const o=normalizeRoute(origin);
+  const d=normalizeRoute(destination);
+  const destinationUf=(d.match(/(?:^|[\\s/,-])(SP|SC)$/)||[])[1] || d;
+  return o+"|"+destinationUf;
+}
+
+function getDestinationUf(destination){
+  const d=normalizeRoute(destination);
+  return (d.match(/(?:^|[\\s/,-])(SP|SC)$/)||[])[1] || (d==="SP"||d==="SC"?d:"");
 }
 
 function getBandIndex(weight){
@@ -71,6 +80,9 @@ function calculateSchreiberQuote(input={}){
   const pedagio=billableWeight>0 ? Math.ceil(billableWeight/100)*SCHREIBER_RULES.pedágioPer100Kg : 0;
 
   const originalComposition=baseFreight+freteValor+gris+pedagio;
+  const destinationUf=getDestinationUf(input.destination);
+  const icmsRate=SCHREIBER_RULES.icmsRates[destinationUf] || 0;
+  const icms=originalComposition*icmsRate;
   const trt=input.trt ? Math.max(originalComposition*SCHREIBER_RULES.trtRate,SCHREIBER_RULES.trtMinimum) : 0;
 
   const tde=Number(input.tdeValue)||0;
@@ -85,7 +97,7 @@ function calculateSchreiberQuote(input={}){
   const reentrega=input.reentrega ? originalComposition*(input.tde ? 1 : SCHREIBER_RULES.reentregaRate) : 0;
   const devolucao=input.devolucao ? originalComposition*SCHREIBER_RULES.devolucaoRate : 0;
 
-  const total=originalComposition+trt+tde+tda+tdc+descarga+storage+palletization+tmr+reentrega+devolucao;
+  const total=originalComposition+icms+trt+tde+tda+tdc+descarga+storage+palletization+tmr+reentrega+devolucao;
 
   if(input.tde && !tde) warnings.push("TDE marcado, mas nenhum valor de TDE foi informado/configurado.");
   if(lengthCm>300) warnings.push("TMR automático: material com comprimento superior a 3 metros.");
@@ -96,7 +108,7 @@ function calculateSchreiberQuote(input={}){
   return {
     route:key, actualWeight, volumetricWeight, billableWeight, invoice, volumes, lengthCm,
     baseFreight:round2(baseFreight), freteValor:round2(freteValor), gris:round2(gris),
-    pedagio:round2(pedagio), trt:round2(trt), tde:round2(tde), tda:round2(tda),
+    pedagio:round2(pedagio), icmsRate, icms:round2(icms), trt:round2(trt), tde:round2(tde), tda:round2(tda),
     tdc:round2(tdc), descarga:round2(descarga), storage:round2(storage),
     palletization:round2(palletization), tmr:round2(tmr), reentrega:round2(reentrega),
     devolucao:round2(devolucao), total:round2(total), warnings
