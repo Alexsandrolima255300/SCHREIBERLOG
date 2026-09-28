@@ -7,6 +7,28 @@ const onlyDigits=v=>v.replace(/\D/g,"");
 
 const formatCep=v=>{const d=onlyDigits(v).slice(0,8);return d.length>5?d.slice(0,5)+"-"+d.slice(5):d;};
 
+const applyRecipientTDE=async cnpj=>{
+  const checkbox=$("#tde"), status=$("#recipientTdeStatus");
+  if(!checkbox) return;
+  checkbox.checked=false;
+  checkbox.disabled=true;
+  if(status) status.innerHTML='<span class="status-loading">Verificando cadastro de TDE...</span>';
+  try{
+    const minimum=await window.findSchreiberTDE?.(cnpj);
+    if(minimum!=null){
+      checkbox.checked=true;
+      checkbox.dataset.tdeMinimum=String(minimum);
+      if(status) status.innerHTML='<span class="status-success">✓ TDE automático: destinatário cadastrado • mínimo '+money(minimum)+'</span>';
+    }else{
+      delete checkbox.dataset.tdeMinimum;
+      if(status) status.innerHTML='<span class="status-muted">TDE não identificado para este destinatário.</span>';
+    }
+  }catch(error){
+    delete checkbox.dataset.tdeMinimum;
+    if(status) status.innerHTML='<span class="status-error">Não foi possível verificar a tabela TDE.</span>';
+  }
+};
+
 const formatCnpj=v=>{
   const d=onlyDigits(v).slice(0,14);
   if(d.length<=2)return d;
@@ -39,6 +61,7 @@ const setupCnpjLookup=({inputId,buttonId,statusId,companyId,addressId,routeId,ce
       if(routeId && $(routeId) && cidadeUf) $(routeId).value=cidadeUf;
       if(cepId && $(cepId) && data.cep) $(cepId).value=formatCep(data.cep);
       if(status) status.innerHTML='<span class="status-success">✓ '+label+' encontrado(a): '+nome+'</span>';
+      if(label==="Destinatário") await applyRecipientTDE(cnpj);
     }catch(error){
       if(status) status.innerHTML='<span class="status-error">'+(error.message||"Erro ao consultar CNPJ.")+'</span>';
       if(company) company.value="";
@@ -87,7 +110,7 @@ $("#quoteForm")?.addEventListener("submit",e=>{
 
   const result=window.SchreiberCalculator.calculateSchreiberQuote({
     origin,destination,weight,invoice,volumes,volumeM3,
-    trt:$("#trt")?.checked,tde:$("#tde")?.checked,tda:$("#tda")?.checked,tdc:$("#tdc")?.checked,
+    trt:$("#trt")?.checked,tde:$("#tde")?.checked,tdeValue:Number($("#tde")?.dataset.tdeMinimum||0),tda:$("#tda")?.checked,tdc:$("#tdc")?.checked,
     reentrega:$("#reentrega")?.checked,devolucao:$("#devolucao")?.checked,tmr:$("#tmr")?.checked,
     pallets:Number($("#pallets")?.value||0),storageDays:Number($("#storageDays")?.value||0)
   });
@@ -109,7 +132,7 @@ $("#quoteForm")?.addEventListener("submit",e=>{
   box.innerHTML=
     '<div class="quote-summary"><div><small>PESO CONSIDERADO</small><b>'+result.billableWeight.toLocaleString("pt-BR",{maximumFractionDigits:3})+' kg</b></div><div><small>ROTA</small><b>'+origin+' → '+destination+'</b></div><div class="total"><small>FRETE ESTIMADO</small><b>'+money(result.total)+'</b></div></div>'+
     '<div class="quote-breakdown">'+rows+'</div>'+warningHtml+
-    '<div class="quote-note">Cálculo baseado na tabela contratual fornecida para Brasil Engrenagens. ICMS não foi incluído, conforme regra da tabela. TDE/TDA/TDC só entram com valor cadastrado.</div>';
+    '<div class="quote-note">Cálculo baseado na tabela contratual fornecida para Brasil Engrenagens. ICMS não foi incluído, conforme regra da tabela. TDE é identificado automaticamente pelo CNPJ do destinatário conforme a tabela de agosto/2026.</div>';
   box.scrollIntoView?.({behavior:"smooth",block:"nearest"});
 });
 
