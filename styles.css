@@ -200,3 +200,14 @@
  .optional-fees{margin-left:0!important;margin-right:0!important}
  .form-bottom{padding:0!important;flex-direction:column;align-items:stretch}
 }
+
+/* Campo Valor da NF — mais claro e profissional */
+.invoice-field{position:relative}
+.invoice-field>small{font-size:10px;font-weight:500;color:#8a97aa;margin-top:5px}
+.money-input{height:48px;display:flex;align-items:center;border:1px solid #dce4ee;border-radius:11px;background:#fff;overflow:hidden;transition:.2s}
+.money-input:focus-within{border-color:#f7a600;box-shadow:0 0 0 4px rgba(247,166,0,.11)}
+.money-prefix{height:100%;min-width:48px;display:flex;align-items:center;justify-content:center;background:#f3f6fb;border-right:1px solid #e1e6ef;color:#12226c;font-size:13px;font-weight:800}
+.money-input input{flex:1!important;width:100%!important;height:100%!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;outline:0!important;padding:0 14px!important;color:#122540!important;font-size:14px!important;font-weight:600!important;text-align:right}
+.money-input input::placeholder{color:#a1acbb!important;font-weight:400}
+.money-input input:focus{border:0!important;box-shadow:none!important}
+@media(max-width:760px){.money-input input{text-align:left}}
