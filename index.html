@@ -100,6 +100,7 @@
                   </div>
                 </label>
                 <div class="cnpj-status" id="recipientCnpjStatus" aria-live="polite"></div>
+                <div class="tde-status" id="recipientTdeStatus" aria-live="polite"></div>
                 <label>Empresa
                   <input id="recipientCompany" type="text" placeholder="Preenchido automaticamente" readonly>
                 </label>
@@ -148,7 +149,7 @@
           </div>
           <div class="optional-fees">
             <label class="check"><input id="trt" type="checkbox"> TRT (5%, mínimo R$ 5,00)</label>
-            <label class="check"><input id="tde" type="checkbox"> TDE</label>
+            <label class="check"><input id="tde" type="checkbox" disabled> TDE automático</label>
             <label class="check"><input id="tda" type="checkbox"> TDA</label>
             <label class="check"><input id="tdc" type="checkbox"> TDC</label>
             <label class="check"><input id="reentrega" type="checkbox"> Reentrega</label>
@@ -243,6 +244,7 @@
 
   <footer><div class="container footer"><img src="https://sbr.log.br/img/logo.svg" alt="SchreiberLog"><span>Portal digital • SchreiberLog</span><span>© 2026</span></div></footer>
   <script src="./calculator.js"></script>
+  <script src="./tde-data.js"></script>
   <script src="./script.js"></script>
 </body>
 </html>
