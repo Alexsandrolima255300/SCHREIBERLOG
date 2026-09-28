@@ -18,23 +18,17 @@
 <body>
   <header class="header">
     <div class="container nav">
-      <a class="brand" href="#inicio" aria-label="SchreiberLog">
-        <img src="ChatGPT Image 28 de set. de 2026, 10_18_01.png" alt="SchreiberLog">
-      </a>
+      <a class="brand" href="#inicio" aria-label="SchreiberLog"><img src="ChatGPT Image 28 de set. de 2026, 10_18_01.png" alt="SchreiberLog"></a>
       <nav class="desktop-nav">
         <a href="#cotacao">Cotação</a>
         <a href="https://sbr.log.br/rastreamento.php">Rastreamento</a>
-        <a href="#servicos">Serviços</a><a href="#unidades">Unidades</a>
-        <a href="#atendimento">Atendimento</a>
+        <a href="#servicos">Serviços</a><a href="#unidades">Unidades</a><a href="#atendimento">Atendimento</a>
       </nav>
       <button class="menu-btn" id="menuBtn" aria-label="Abrir menu">☰</button>
       <a class="btn btn-primary nav-cta" href="#cotacao">Calcular frete</a>
     </div>
     <div class="mobile-nav" id="mobileNav">
-      <a href="#cotacao">Cotação</a>
-      <a href="https://sbr.log.br/rastreamento.php">Rastreamento</a>
-      <a href="#servicos">Serviços</a>
-      <a href="#atendimento">Atendimento</a>
+      <a href="#cotacao">Cotação</a><a href="https://sbr.log.br/rastreamento.php">Rastreamento</a><a href="#servicos">Serviços</a><a href="#atendimento">Atendimento</a>
     </div>
   </header>
 
@@ -49,18 +43,9 @@
             <a class="btn btn-primary btn-lg" href="#cotacao">Fazer cotação <span>→</span></a>
             <a class="btn btn-ghost btn-lg" href="https://sbr.log.br/rastreamento.php">Rastrear carga</a>
           </div>
-          <div class="trust-row">
-            <div><strong>36+</strong><span>anos de mercado</span></div>
-            <div><strong>SC • SP</strong><span>operação conectada</span></div>
-            <div><strong>24h</strong><span>canal digital</span></div>
-          </div>
+          <div class="trust-row"><div><strong>36+</strong><span>anos de mercado</span></div><div><strong>SC • SP</strong><span>operação conectada</span></div><div><strong>24h</strong><span>canal digital</span></div></div>
         </div>
-        <div class="hero-visual reveal">
-          <div class="hero-banner">
-            <img src="./imagesprincipalsite.jpg" alt="SchreiberLog — Logística eficiente: menos problemas, mais entrega." loading="eager">
-            <div class="hero-banner-badge"><span>●</span> OPERAÇÃO SCHREIBERLOG</div>
-          </div>
-        </div></div>
+        <div class="hero-visual reveal"><div class="hero-banner"><img src="./imagesprincipalsite.jpg" alt="SchreiberLog — Logística eficiente: menos problemas, mais entrega." loading="eager"><div class="hero-banner-badge"><span>●</span> OPERAÇÃO SCHREIBERLOG</div></div></div>
       </div>
     </section>
 
@@ -69,7 +54,7 @@
         <div class="section-heading reveal">
           <span class="eyebrow">COTAÇÃO ONLINE</span>
           <h2>Descubra as condições do seu embarque</h2>
-          <p>Preencha os dados da carga. O valor final deve ser conectado à tabela comercial oficial da SchreiberLog antes de entrar em produção.</p>
+          <p>Preencha os dados da carga. A origem informada é livre para cadastro, mas a regra comercial da cotação considera a operação SP3.</p>
         </div>
         <form class="quote-card reveal" id="quoteForm">
           <div class="form-title"><div class="icon-box">↗</div><div><h3>Nova cotação</h3><span>Dados básicos da carga</span></div></div>
@@ -77,7 +62,7 @@
             <div class="cnpj-party-grid">
               <div class="cnpj-party">
                 <div class="party-title"><b>Remetente</b><span>Empresa que envia a carga</span></div>
-                <label>CNPJ do remetente
+                <label>CNPJ do remetente>
                   <div class="cnpj-row">
                     <input id="senderCnpj" inputmode="numeric" maxlength="18" placeholder="00.000.000/0000-00" autocomplete="off">
                     <button class="btn btn-primary" type="button" id="lookupSenderCnpj">Buscar</button>
@@ -85,18 +70,18 @@
                 </label>
                 <div class="cnpj-status" id="senderCnpjStatus" aria-live="polite"></div>
                 <label>Empresa
-                  <input id="senderCompany" type="text" placeholder="Preenchido automaticamente" readonly>
+                  <input id="senderCompany" type="text" placeholder="Digite ou busque pelo CNPJ">
                 </label>
                 <label>Endereço
-                  <input id="senderAddress" type="text" placeholder="Preenchido automaticamente" readonly>
+                  <input id="senderAddress" type="text" placeholder="Digite o endereço de coleta">
                 </label>
                 <label>CEP de coleta
                   <input id="senderCep" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="postal-code" required>
                   <small>CEP usado para definir a coleta.</small>
                 </label>
                 <label>Origem operacional
-                  <input id="originRegion" value="SP3" readonly>
-                  <small>Origem operacional definida como SP3 conforme a tabela comercial.</small>
+                  <input id="originRegion" value="SP3">
+                  <small>Você pode informar outro texto no campo, mas a cotação continua utilizando <strong>SP3</strong> como origem comercial.</small>
                 </label>
               </div>
               <div class="cnpj-party">
@@ -110,10 +95,10 @@
                 <div class="cnpj-status" id="recipientCnpjStatus" aria-live="polite"></div>
                 <div class="tde-status" id="recipientTdeStatus" aria-live="polite"></div>
                 <label>Empresa
-                  <input id="recipientCompany" type="text" placeholder="Preenchido automaticamente" readonly>
+                  <input id="recipientCompany" type="text" placeholder="Preenchido automaticamente">
                 </label>
                 <label>Endereço
-                  <input id="recipientAddress" type="text" placeholder="Preenchido automaticamente" readonly>
+                  <input id="recipientAddress" type="text" placeholder="Preenchido automaticamente">
                 </label>
                 <label>CEP de destino
                   <input id="cep" inputmode="numeric" maxlength="9" placeholder="00000-000" autocomplete="postal-code" required>
@@ -124,36 +109,23 @@
           </div>
           <div class="form-grid">
             <label>Origem
-              <input id="origin" required placeholder="Cidade / UF" readonly>
+              <input id="origin" required placeholder="Cidade / UF">
             </label>
             <label>Destino
-              <input id="destination" required placeholder="Cidade / UF" readonly>
+              <input id="destination" required placeholder="Cidade / UF">
             </label>
-            <label>Peso da carga
-              <div class="input-unit"><input id="weight" type="number" min="0.01" step="0.01" required placeholder="0,00"><span>kg</span></div>
-            </label>
+            <label>Peso da carga><div class="input-unit"><input id="weight" type="number" min="0.01" step="0.01" required placeholder="0,00"><span>kg</span></div></label>
             <label class="invoice-field">Valor da NF
-              <div class="money-input">
-                <span class="money-prefix">R$</span>
-                <input id="invoice" type="text" inputmode="decimal" autocomplete="off" required placeholder="0,00" aria-label="Valor da Nota Fiscal">
-              </div>
+              <div class="money-input"><span class="money-prefix">R$</span><input id="invoice" type="text" inputmode="decimal" autocomplete="off" required placeholder="0,00" aria-label="Valor da Nota Fiscal"></div>
               <small>Informe o valor total da Nota Fiscal</small>
             </label>
-            <label>Quantidade de volumes
-              <input id="volumes" type="number" min="1" step="1" required placeholder="1">
-            </label>
+            <label>Quantidade de volumes><input id="volumes" type="number" min="1" step="1" required placeholder="1"></label>
             <div class="dimensions-field">
               <span class="field-title">Dimensões da carga por volume</span>
               <div class="dimensions-grid">
-                <label>Altura
-                  <div class="input-unit"><input id="heightCm" type="number" min="0" step="0.1" placeholder="0,0"><span>cm</span></div>
-                </label>
-                <label>Largura
-                  <div class="input-unit"><input id="widthCm" type="number" min="0" step="0.1" placeholder="0,0"><span>cm</span></div>
-                </label>
-                <label>Comprimento
-                  <div class="input-unit"><input id="lengthCm" type="number" min="0" step="0.1" placeholder="0,0"><span>cm</span></div>
-                </label>
+                <label>Altura<div class="input-unit"><input id="heightCm" type="number" min="0" step="0.1" placeholder="0,0"><span>cm</span></div></label>
+                <label>Largura<div class="input-unit"><input id="widthCm" type="number" min="0" step="0.1" placeholder="0,0"><span>cm</span></div></label>
+                <label>Comprimento<div class="input-unit"><input id="lengthCm" type="number" min="0" step="0.1" placeholder="0,0"><span>cm</span></div></label>
               </div>
               <small id="cubagemInfo" class="cubagem-info">Cubagem calculada automaticamente a 300 kg/m³ conforme a tabela.</small>
               <input id="volumeM3" type="hidden" value="0">
@@ -181,83 +153,42 @@
 
     <section class="tracking-section" id="rastreio">
       <div class="container tracking-grid">
-        <div class="tracking-copy reveal">
-          <span class="eyebrow">RASTREAMENTO</span>
-          <h2>Saiba onde está sua carga.</h2>
-          <p>Digite o código do documento ou conhecimento para consultar o andamento do embarque.</p>
-          <form id="trackingForm" class="tracking-form">
-            <input id="trackingCode" required placeholder="Ex.: SCH-000000">
-            <button class="btn btn-primary" type="submit">Consultar</button>
-          </form>
-          <div id="trackingResult" class="tracking-result" hidden></div>
-        </div>
-        <div class="timeline-card reveal">
-          <div class="timeline-item active"><span>01</span><div><b>Coleta solicitada</b><small>O embarque entra no fluxo operacional.</small></div></div>
-          <div class="timeline-item"><span>02</span><div><b>Em trânsito</b><small>Atualização conforme integração operacional.</small></div></div>
-          <div class="timeline-item"><span>03</span><div><b>Em rota de entrega</b><small>A carga segue para o destino.</small></div></div>
-          <div class="timeline-item"><span>04</span><div><b>Entregue</b><small>Comprovante e encerramento do embarque.</small></div></div>
-        </div>
+        <div class="tracking-copy reveal"><span class="eyebrow">RASTREAMENTO</span><h2>Saiba onde está sua carga.</h2><p>Digite o código do documento ou conhecimento para consultar o andamento do embarque.</p><form id="trackingForm" class="tracking-form"><input id="trackingCode" required placeholder="Ex.: SCH-000000"><button class="btn btn-primary" type="submit">Consultar</button></form><div id="trackingResult" class="tracking-result" hidden></div></div>
+        <div class="timeline-card reveal"><div class="timeline-item active"><span>01</span><div><b>Coleta solicitada</b><small>O embarque entra no fluxo operacional.</small></div></div><div class="timeline-item"><span>02</span><div><b>Em trânsito</b><small>Atualização conforme integração operacional.</small></div></div><div class="timeline-item"><span>03</span><div><b>Em rota de entrega</b><small>A carga segue para o destino.</small></div></div><div class="timeline-item"><span>04</span><div><b>Entregue</b><small>Comprovante e encerramento do embarque.</small></div></div></div>
       </div>
     </section>
 
-    <section class="services" id="servicos">
-      <div class="container">
-        <div class="section-heading reveal"><span class="eyebrow">SOLUÇÕES</span><h2>Um portal para o ciclo completo</h2></div>
-        <div class="service-grid">
-          <article class="service-card reveal"><span>01</span><h3>Cotação de frete</h3><p>Formulário estruturado para origem, destino, peso, NF e volumes.</p><a href="#cotacao">Solicitar →</a></article>
-          <article class="service-card reveal"><span>02</span><h3>Rastreamento</h3><p>Área preparada para integrar eventos e status do TMS da operação.</p><a href="https://sbr.log.br/rastreamento.php">Rastrear →</a></article>
-          <article class="service-card reveal"><span>03</span><h3>Solicitação de coleta</h3><p>Fluxo digital para reunir dados do remetente e agilizar a operação.</p><a href="#atendimento">Solicitar →</a></article>
-          <article class="service-card reveal"><span>04</span><h3>Área do cliente</h3><p>Base para login, histórico de cotações, documentos e embarques.</p><a href="#atendimento">Acessar →</a></article>
-        </div>
-      </div>
-    </section>
+    <section class="services" id="servicos"><div class="container"><div class="section-heading reveal"><span class="eyebrow">SOLUÇÕES</span><h2>Um portal para o ciclo completo</h2></div><div class="service-grid"><article class="service-card reveal"><span>01</span><h3>Cotação de frete</h3><p>Formulário estruturado para origem, destino, peso, NF e volumes.</p><a href="#cotacao">Solicitar →</a></article><article class="service-card reveal"><span>02</span><h3>Rastreamento</h3><p>Área preparada para integrar eventos e status do TMS da operação.</p><a href="https://sbr.log.br/rastreamento.php">Rastrear →</a></article><article class="service-card reveal"><span>03</span><h3>Solicitação de coleta</h3><p>Fluxo digital para reunir dados do remetente e agilizar a operação.</p><a href="#atendimento">Solicitar →</a></article><article class="service-card reveal"><span>04</span><h3>Área do cliente</h3><p>Base para login, histórico de cotações, documentos e embarques.</p><a href="#atendimento">Acessar →</a></article></div></div></section>
 
-    <section class="network">
-      <div class="container network-box reveal">
-        <div><span class="eyebrow">REDE SCHREIBERLOG</span><h2>Operação conectada entre unidades.</h2><p>A relação pública de praça da empresa informa unidades responsáveis, regiões, frequência e previsões de entrega. Esses dados podem alimentar o módulo de prazo do portal.</p></div>
-        <div class="network-stats"><div><b>SC</b><span>Santa Catarina</span></div><div><b>SP</b><span>São Paulo</span></div><div><b>+</b><span>cidades atendidas</span></div></div>
-      </div>
-    </section>
+    <section class="network"><div class="container network-box reveal"><div><span class="eyebrow">REDE SCHREIBERLOG</span><h2>Operação conectada entre unidades.</h2><p>A relação pública de praça da empresa informa unidades responsáveis, regiões, frequência e previsões de entrega. Esses dados podem alimentar o módulo de prazo do portal.</p></div><div class="network-stats"><div><b>SC</b><span>Santa Catarina</span></div><div><b>SP</b><span>São Paulo</span></div><div><b>+</b><span>cidades atendidas</span></div></div></div></section>
 
-    <section class="units" id="unidades">
-      <div class="container">
-        <div class="section-heading reveal">
-          <span class="eyebrow">UNIDADES</span>
-          <h2>Onde encontrar a SchreiberLog.</h2>
-          <p>Unidades de atendimento em Santa Catarina e São Paulo.</p>
-        </div>
-        <div class="units-grid">
-          <article class="unit-group reveal">
-            <div class="unit-state"><img src="https://sbr.log.br/img/sc.png" alt="Santa Catarina"><div><span>SANTA CATARINA</span><small>11 unidades</small></div></div>
-            <div class="unit-list">
-              <div class="unit-card"><div><b>FILIAL RSU (Matriz)</b><small>Rio do Sul - SC</small><p>Rua Ruy Barbosa, 115 · Budag · CEP 89165-487</p></div><div class="unit-contact"><a href="tel:(47) 3521-1313">(47) 3521-1313</a><a href="mailto:sac.rsu@sbr.com.br">sac.rsu@sbr.com.br</a><a class="map-link" href="https://goo.gl/maps/3TabxmJzseNtquiw7" target="_blank" rel="noopener">Google Maps →</a></div></div><div class="unit-card"><div><b>UNIDADE TIM</b><small>Indaial - SC</small><p>Rua Uberaba, 400, Galpão 04 · Mulde · CEP 89084-740</p></div><div class="unit-contact"><a href="tel:(47) 2017-1030">(47) 2017-1030</a><a href="mailto:sac.tim@sbr.log.br">sac.tim@sbr.log.br</a><a class="map-link" href="https://maps.app.goo.gl/gS7u8NcHzRdcRdsB7" target="_blank" rel="noopener">Google Maps →</a></div></div><div class="unit-card"><div><b>FILIAL BNU</b><small>Blumenau - SC</small><p>Rua Dr. Pedro Zimmermann, 7299, GL 04 e 05 · Itoupava Central · CEP 89068-003</p></div><div class="unit-contact"><a href="tel:(47) 3180-0890">(47) 3180-0890</a><a href="mailto:sac.bnu@sbr.log.br">sac.bnu@sbr.log.br</a><a class="map-link" href="https://goo.gl/maps/dDVvuakqBp6dHRbp8" target="_blank" rel="noopener">Google Maps →</a></div></div><div class="unit-card"><div><b>UNIDADE JAR</b><small>Guaramirim - SC</small><p>Rod. BR 280, KM 59, nº 13750, GL 01 · Centro · CEP 89270-000</p></div><div class="unit-contact"><a href="tel:(47) 3307-2300">(47) 3307-2300</a><a href="mailto:sac.jar@sbr.log.br">sac.jar@sbr.log.br</a><a class="map-link" href="https://goo.gl/maps/c5P78CXdZwTWrxKC9" target="_blank" rel="noopener">Google Maps →</a></div></div><div class="unit-card"><div><b>FILIAL JOI</b><small>Joinville - SC</small><p>Rua Nilo Peçanha, 621 · Floresta · CEP 89211-400</p></div><div class="unit-contact"><a href="tel:(47) 3842-0244">(47) 3842-0244</a><a href="mailto:sac.joi@sbr.log.br">sac.joi@sbr.log.br</a><a class="map-link" href="https://maps.app.goo.gl/ocMrFpJXSFYSRaJP7" target="_blank" rel="noopener">Google Maps →</a></div></div><div class="unit-card"><div><b>FILIAL ITJ</b><small>Itajaí - SC</small><p>Rodovia Jorge Lacerda, 961 · Espinheiros · CEP 88317-000</p></div><div class="unit-contact"><a href="tel:(47) 3368-1622">(47) 3368-1622</a><a href="mailto:sac.itj@sbr.log.br">sac.itj@sbr.log.br</a><a class="map-link" href="https://goo.gl/maps/o4SYnyWbh7RmkmB8A" target="_blank" rel="noopener">Google Maps →</a></div></div><div class="unit-card"><div><b>FILIAL FLN</b><small>São José - SC</small><p>Rua Valdo Gerlach, S/N · Fazenda Santo Antônio · CEP 88104-735</p></div><div class="unit-contact"><a href="tel:(48) 4042-1032">(48) 4042-1032</a><a href="mailto:sac.fln@sbr.log.br">sac.fln@sbr.log.br</a><a class="map-link" href="https://goo.gl/maps/56siNpa9LkuLih7A9" target="_blank" rel="noopener">Google Maps →</a></div></div><div class="unit-card"><div><b>UNIDADE TUB</b><small>Tubarão - SC</small><p>Rua Silvio Burigo, 2665, Galpão 01 · Monte Castelo · CEP 88702-504</p></div><div class="unit-contact"><a href="tel:(48) 3199-0950">(48) 3199-0950</a><a href="mailto:sac.tub@sbr.log.br">sac.tub@sbr.log.br</a><a class="map-link" href="https://goo.gl/maps/yCFHG8geD3c5dmre7" target="_blank" rel="noopener">Google Maps →</a></div></div><div class="unit-card"><div><b>UNIDADE CRI</b><small>Criciúma - SC</small><p>Rodovia BR 101, KM 397, 6425 · Vila São Domingos · CEP 88812-600</p></div><div class="unit-contact"><a href="tel:(48) 3198-1918">(48) 3198-1918</a><a href="mailto:sac.cri@sbr.log.br">sac.cri@sbr.log.br</a><a class="map-link" href="https://goo.gl/maps/xeJkJTX3aZKKrTL79" target="_blank" rel="noopener">Google Maps →</a></div></div><div class="unit-card"><div><b>UNIDADE BSQ</b><small>Brusque - SC</small><p>Rua Melchior Schlindwein, 60, GL 03 · Santa Terezinha · CEP 88352-210</p></div><div class="unit-contact"><a href="tel:(47) 3513-6052">(47) 3513-6052</a><a href="mailto:sac.bsq@sbr.log.br">sac.bsq@sbr.log.br</a><a class="map-link" href="https://maps.app.goo.gl/LdxNeRm4UkrwW7Nf9" target="_blank" rel="noopener">Google Maps →</a></div></div><div class="unit-card"><div><b>UNIDADE SBS</b><small>São Bento do Sul - SC</small><p>Rod. Deputado Genésio Tureck, 222, Galpão 02 · Boehmerwald · CEP 89287-885</p></div><div class="unit-contact"><a href="tel:(47) 2018-2121">(47) 2018-2121</a><a href="mailto:sac.sbs@sbr.log.br">sac.sbs@sbr.log.br</a><a class="map-link" href="https://maps.app.goo.gl/FrvU2JsuRdDr6xBe9" target="_blank" rel="noopener">Google Maps →</a></div></div>
-            </div>
-          </article>
-          <article class="unit-group reveal">
-            <div class="unit-state"><img src="https://sbr.log.br/img/sp.jpg" alt="São Paulo"><div><span>SÃO PAULO</span><small>6 unidades</small></div></div>
-            <div class="unit-list">
-              <div class="unit-card"><div><b>FILIAL SPO</b><small>Guarulhos - SP</small><p>Rua São Domingos do Prata, 200 · Vila Barros · CEP 07193-160</p></div><div class="unit-contact"><a href="tel:(11) 2408-1073">(11) 2408-1073</a><a href="mailto:sac.spo@sbr.log.br">sac.spo@sbr.log.br</a><a class="map-link" href="https://goo.gl/maps/aFeqAgLPj4YZqj1V7" target="_blank" rel="noopener">Google Maps →</a></div></div><div class="unit-card"><div><b>FILIAL GRU</b><small>Guarulhos - SP</small><p>Estrada Municipal nº 205, GL 03 · Jardim Santo Afonso · CEP 07215-040</p></div><div class="unit-contact"><a href="tel:(11) 2408-1067">(11) 2408-1067</a><a href="mailto:sac.gru@sbr.log.br">sac.gru@sbr.log.br</a><a class="map-link" href="https://maps.app.goo.gl/trs1uq7XyuAu81DU6" target="_blank" rel="noopener">Google Maps →</a></div></div><div class="unit-card"><div><b>FILIAL CPN</b><small>Campinas - SP</small><p>Rua Armando de Campos, 460 · Nova Aparecida · CEP 13069-129</p></div><div class="unit-contact"><a href="tel:(19) 2218-7988">(19) 2218-7988</a><a href="mailto:sac.cpn@sbr.log.br">sac.cpn@sbr.log.br</a><a class="map-link" href="https://goo.gl/maps/DmjuybBATf78nNej6" target="_blank" rel="noopener">Google Maps →</a></div></div><div class="unit-card"><div><b>UNIDADE SOR</b><small>Sorocaba - SP</small><p>Rua José Carlos de Paula, 66 · Parque Empresarial das Mangueiras · CEP 18086-428</p></div><div class="unit-contact"><a href="tel:(15) 3199-2020">(15) 3199-2020</a><a href="mailto:sac.sor@sbr.log.br">sac.sor@sbr.log.br</a><a class="map-link" href="https://maps.app.goo.gl/CabxGsMZEVQ1r6" target="_blank" rel="noopener">Google Maps →</a></div></div><div class="unit-card"><div><b>UNIDADE SP3</b><small>São José dos Campos - SP</small><p>Rua Miracema, 241 · Chácaras Reunidas · CEP 12238-360</p></div><div class="unit-contact"><a href="tel:(12) 3199-1919">(12) 3199-1919</a><a href="mailto:sac.SP3@sbr.log.br">sac.SP3@sbr.log.br</a><a class="map-link" href="https://goo.gl/maps/KQDoXrd4vdVZLHj58" target="_blank" rel="noopener">Google Maps →</a></div></div><div class="unit-card"><div><b>UNIDADE RIB</b><small>Ribeirão Preto - SP</small><p>Rua Farjala Moises, 745 · Pq. Res. Candido Portinari · CEP 14093-524</p></div><div class="unit-contact"><a href="tel:(16) 2018-3333">(16) 2018-3333</a><a href="mailto:sac.rib@sbr.log.br">sac.rib@sbr.log.br</a><a class="map-link" href="https://maps.app.goo.gl/ou3FbWhRKnX9Fy2x8" target="_blank" rel="noopener">Google Maps →</a></div></div>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-    <section class="contact" id="atendimento">
-      <div class="container contact-box reveal">
-        <div><span class="eyebrow">ATENDIMENTO</span><h2>Fale com a SchreiberLog.</h2><p>Use os canais oficiais para atendimento, coleta e acompanhamento.</p></div>
-        <div class="contact-actions">
-          <a class="contact-link" href="https://wa.me/5547997660043" target="_blank" rel="noopener"><b>WhatsApp SC</b><span>(47) 99766-0043 →</span></a>
-          <a class="contact-link" href="https://wa.me/551124081067" target="_blank" rel="noopener"><b>WhatsApp SP</b><span>(11) 2408-1067 →</span></a>
-          <a class="contact-link" href="https://sbr.log.br/" target="_blank" rel="noopener"><b>Site oficial</b><span>sbr.log.br →</span></a>
-        </div>
-      </div>
-    </section>
+    <section class="units" id="unidades"><div class="container"><div class="section-heading reveal"><span class="eyebrow">UNIDADES</span><h2>Onde encontrar a SchreiberLog.</h2><p>Unidades de atendimento em Santa Catarina e São Paulo.</p></div><div class="units-grid">
+      <article class="unit-group reveal"><div class="unit-state"><img src="https://sbr.log.br/img/sc.png" alt="Santa Catarina"><div><span>SANTA CATARINA</span><small>11 unidades</small></div></div><div class="unit-list">
+        <div class="unit-card"><div><b>FILIAL RSU (Matriz)</b><small>Rio do Sul - SC</small><p>Rua Ruy Barbosa, 115 · Budag · CEP 89165-487</p></div><div class="unit-contact"><a href="tel:(47) 3521-1313">(47) 3521-1313</a><a href="mailto:sac.rsu@sbr.com.br">sac.rsu@sbr.com.br</a><a class="map-link" href="https://goo.gl/maps/3TabxmJzseNtquiw7" target="_blank" rel="noopener">Google Maps →</a></div></div>
+        <div class="unit-card"><div><b>UNIDADE TIM</b><small>Indaial - SC</small><p>Rua Uberaba, 400, Galpão 04 · Mulde · CEP 89084-740</p></div><div class="unit-contact"><a href="tel:(47) 2017-1030">(47) 2017-1030</a><a href="mailto:sac.tim@sbr.log.br">sac.tim@sbr.log.br</a><a class="map-link" href="https://maps.app.goo.gl/gS7u8NcHzRdcRdsB7" target="_blank" rel="noopener">Google Maps →</a></div></div>
+        <div class="unit-card"><div><b>FILIAL BNU</b><small>Blumenau - SC</small><p>Rua Dr. Pedro Zimmermann, 7299, GL 04 e 05 · Itoupava Central · CEP 89068-003</p></div><div class="unit-contact"><a href="tel:(47) 3180-0890">(47) 3180-0890</a><a href="mailto:sac.bnu@sbr.log.br">sac.bnu@sbr.log.br</a><a class="map-link" href="https://goo.gl/maps/dDVvuakqBp6dHRbp8" target="_blank" rel="noopener">Google Maps →</a></div></div>
+        <div class="unit-card"><div><b>UNIDADE JAR</b><small>Guaramirim - SC</small><p>Rod. BR 280, KM 59, nº 13750, GL 01 · Centro · CEP 89270-000</p></div><div class="unit-contact"><a href="tel:(47) 3307-2300">(47) 3307-2300</a><a href="mailto:sac.jar@sbr.log.br">sac.jar@sbr.log.br</a><a class="map-link" href="https://goo.gl/maps/c5P78CXdZwTWrxKC9" target="_blank" rel="noopener">Google Maps →</a></div></div>
+        <div class="unit-card"><div><b>FILIAL JOI</b><small>Joinville - SC</small><p>Rua Nilo Peçanha, 621 · Floresta · CEP 89211-400</p></div><div class="unit-contact"><a href="tel:(47) 3842-0244">(47) 3842-0244</a><a href="mailto:sac.joi@sbr.log.br">sac.joi@sbr.log.br</a><a class="map-link" href="https://maps.app.goo.gl/ocMrFpJXSFYSRaJP7" target="_blank" rel="noopener">Google Maps →</a></div></div>
+        <div class="unit-card"><div><b>FILIAL ITJ</b><small>Itajaí - SC</small><p>Rodovia Jorge Lacerda, 961 · Espinheiros · CEP 88317-000</p></div><div class="unit-contact"><a href="tel:(47) 3368-1622">(47) 3368-1622</a><a href="mailto:sac.itj@sbr.log.br">sac.itj@sbr.log.br</a><a class="map-link" href="https://goo.gl/maps/o4SYnyWbh7RmkmB8A" target="_blank" rel="noopener">Google Maps →</a></div></div>
+        <div class="unit-card"><div><b>FILIAL FLN</b><small>São José - SC</small><p>Rua Valdo Gerlach, S/N · Fazenda Santo Antônio · CEP 88104-735</p></div><div class="unit-contact"><a href="tel:(48) 4042-1032">(48) 4042-1032</a><a href="mailto:sac.fln@sbr.log.br">sac.fln@sbr.log.br</a><a class="map-link" href="https://goo.gl/maps/56siNpa9LkuLih7A9" target="_blank" rel="noopener">Google Maps →</a></div></div>
+        <div class="unit-card"><div><b>UNIDADE TUB</b><small>Tubarão - SC</small><p>Rua Silvio Burigo, 2665, Galpão 01 · Monte Castelo · CEP 88702-504</p></div><div class="unit-contact"><a href="tel:(48) 3199-0950">(48) 3199-0950</a><a href="mailto:sac.tub@sbr.log.br">sac.tub@sbr.log.br</a><a class="map-link" href="https://goo.gl/maps/yCFHG8geD3c5dmre7" target="_blank" rel="noopener">Google Maps →</a></div></div>
+        <div class="unit-card"><div><b>UNIDADE CRI</b><small>Criciúma - SC</small><p>Rodovia BR 101, KM 397, 6425 · Vila São Domingos · CEP 88812-600</p></div><div class="unit-contact"><a href="tel:(48) 3198-1918">(48) 3198-1918</a><a href="mailto:sac.cri@sbr.log.br">sac.cri@sbr.log.br</a><a class="map-link" href="https://goo.gl/maps/xeJkJTX3aZKKrTL79" target="_blank" rel="noopener">Google Maps →</a></div></div>
+        <div class="unit-card"><div><b>UNIDADE BSQ</b><small>Brusque - SC</small><p>Rua Melchior Schlindwein, 60, GL 03 · Santa Terezinha · CEP 88352-210</p></div><div class="unit-contact"><a href="tel:(47) 3513-6052">(47) 3513-6052</a><a href="mailto:sac.bsq@sbr.log.br">sac.bsq@sbr.log.br</a><a class="map-link" href="https://maps.app.goo.gl/LdxNeRm4UkrwW7Nf9" target="_blank" rel="noopener">Google Maps →</a></div></div>
+        <div class="unit-card"><div><b>UNIDADE SBS</b><small>São Bento do Sul - SC</small><p>Rod. Deputado Genésio Tureck, 222, Galpão 02 · Boehmerwald · CEP 89287-885</p></div><div class="unit-contact"><a href="tel:(47) 2018-2121">(47) 2018-2121</a><a href="mailto:sac.sbs@sbr.log.br">sac.sbs@sbr.log.br</a><a class="map-link" href="https://maps.app.goo.gl/FrvU2JsuRdDr6xBe9" target="_blank" rel="noopener">Google Maps →</a></div></div>
+      </div></article>
+      <article class="unit-group reveal"><div class="unit-state"><img src="https://sbr.log.br/img/sp.jpg" alt="São Paulo"><div><span>SÃO PAULO</span><small>6 unidades</small></div></div><div class="unit-list">
+        <div class="unit-card"><div><b>FILIAL SPO</b><small>Guarulhos - SP</small><p>Rua São Domingos do Prata, 200 · Vila Barros · CEP 07193-160</p></div><div class="unit-contact"><a href="tel:(11) 2408-1073">(11) 2408-1073</a><a href="mailto:sac.spo@sbr.log.br">sac.spo@sbr.log.br</a><a class="map-link" href="https://goo.gl/maps/aFeqAgLPj4YZqj1V7" target="_blank" rel="noopener">Google Maps →</a></div></div>
+        <div class="unit-card"><div><b>FILIAL GRU</b><small>Guarulhos - SP</small><p>Estrada Municipal nº 205, GL 03 · Jardim Santo Afonso · CEP 07215-040</p></div><div class="unit-contact"><a href="tel:(11) 2408-1067">(11) 2408-1067</a><a href="mailto:sac.gru@sbr.log.br">sac.gru@sbr.log.br</a><a class="map-link" href="https://maps.app.goo.gl/trs1uq7XyuAu81DU6" target="_blank" rel="noopener">Google Maps →</a></div></div>
+        <div class="unit-card"><div><b>FILIAL CPN</b><small>Campinas - SP</small><p>Rua Armando de Campos, 460 · Nova Aparecida · CEP 13069-129</p></div><div class="unit-contact"><a href="tel:(19) 2218-7988">(19) 2218-7988</a><a href="mailto:sac.cpn@sbr.log.br">sac.cpn@sbr.log.br</a><a class="map-link" href="https://goo.gl/maps/DmjuybBATf78nNej6" target="_blank" rel="noopener">Google Maps →</a></div></div>
+        <div class="unit-card"><div><b>UNIDADE SOR</b><small>Sorocaba - SP</small><p>Rua José Carlos de Paula, 66 · Parque Empresarial das Mangueiras · CEP 18086-428</p></div><div class="unit-contact"><a href="tel:(15) 3199-2020">(15) 3199-2020</a><a href="mailto:sac.sor@sbr.log.br">sac.sor@sbr.log.br</a><a class="map-link" href="https://maps.app.goo.gl/CabxGsMZEVQ1r6" target="_blank" rel="noopener">Google Maps →</a></div></div>
+        <div class="unit-card"><div><b>UNIDADE SP3</b><small>São José dos Campos - SP</small><p>Rua Miracema, 241 · Chácaras Reunidas · CEP 12238-360</p></div><div class="unit-contact"><a href="tel:(12) 3199-1919">(12) 3199-1919</a><a href="mailto:sac.SP3@sbr.log.br">sac.SP3@sbr.log.br</a><a class="map-link" href="https://goo.gl/maps/KQDoXrd4vdVZLHj58" target="_blank" rel="noopener">Google Maps →</a></div></div>
+        <div class="unit-card"><div><b>UNIDADE RIB</b><small>Ribeirão Preto - SP</small><p>Rua Farjala Moises, 745 · Pq. Res. Candido Portinari · CEP 14093-524</p></div><div class="unit-contact"><a href="tel:(16) 2018-3333">(16) 2018-3333</a><a href="mailto:sac.rib@sbr.log.br">sac.rib@sbr.log.br</a><a class="map-link" href="https://maps.app.goo.gl/ou3FbWhRKnX9Fy2x8" target="_blank" rel="noopener">Google Maps →</a></div></div>
+      </div></article>
+    </div></div></section>
+
+    <section class="contact" id="atendimento"><div class="container contact-box reveal"><div><span class="eyebrow">ATENDIMENTO</span><h2>Fale com a SchreiberLog.</h2><p>Use os canais oficiais para atendimento, coleta e acompanhamento.</p></div><div class="contact-actions"><a class="contact-link" href="https://wa.me/5547997660043" target="_blank" rel="noopener"><b>WhatsApp SC</b><span>(47) 99766-0043 →</span></a><a class="contact-link" href="https://wa.me/551124081067" target="_blank" rel="noopener"><b>WhatsApp SP</b><span>(11) 2408-1067 →</span></a><a class="contact-link" href="https://sbr.log.br/" target="_blank" rel="noopener"><b>Site oficial</b><span>sbr.log.br →</span></a></div></div></section>
   </main>
-
   <footer><div class="container footer"><img src="https://sbr.log.br/img/logo.svg" alt="SchreiberLog"><span>Portal digital • SchreiberLog</span><span>© 2026</span></div></footer>
-  <script src="./calculator.js"></script>
-  <script src="./city-data.js"></script>
-  <script src="./tde-data.js"></script>
-  <script src="./script.js"></script>
+  <script src="./calculator.js"></script><script src="./city-data.js"></script><script src="./tde-data.js"></script><script src="./script.js"></script>
 </body>
 </html>
