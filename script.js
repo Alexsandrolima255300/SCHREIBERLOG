@@ -3,15 +3,41 @@ const menuBtn=$("#menuBtn"),mobileNav=$("#mobileNav");
 menuBtn?.addEventListener("click",()=>{mobileNav.style.display=mobileNav.style.display==="block"?"none":"block"});
 document.querySelectorAll(".mobile-nav a").forEach(a=>a.addEventListener("click",()=>mobileNav.style.display="none"));
 
+const money=v=>window.SchreiberCalculator?.formatBRL(v)||"R$ 0,00";
+
 $("#quoteForm")?.addEventListener("submit",e=>{
   e.preventDefault();
   const origin=$("#origin").value.trim(), destination=$("#destination").value.trim();
   const weight=Number($("#weight").value||0), invoice=Number($("#invoice").value||0), volumes=Number($("#volumes").value||0);
+  const volumeM3=Number($("#volumeM3")?.value||0);
   if(!origin||!destination||weight<=0||invoice<0||volumes<1)return;
-  const result=$("#quoteResult");
-  result.hidden=false;
-  result.innerHTML="<b>Dados recebidos.</b><br>"+origin+" → "+destination+" • "+weight.toLocaleString("pt-BR")+" kg • "+volumes+" volume(s).<br><br><span>O cálculo do valor do frete deve ser ligado à tabela comercial oficial da SchreiberLog. Nenhuma tarifa foi inventada nesta versão.</span>";
-  result.scrollIntoView({behavior:"smooth",block:"nearest"});
+
+  const result=window.SchreiberCalculator.calculateSchreiberQuote({
+    origin,destination,weight,invoice,volumes,volumeM3,
+    trt:$("#trt")?.checked,tde:$("#tde")?.checked,tda:$("#tda")?.checked,tdc:$("#tdc")?.checked,
+    reentrega:$("#reentrega")?.checked,devolucao:$("#devolucao")?.checked,tmr:$("#tmr")?.checked,
+    pallets:Number($("#pallets")?.value||0),storageDays:Number($("#storageDays")?.value||0)
+  });
+
+  const box=$("#quoteResult");
+  box.hidden=false;
+  const rows=[
+    ["Frete base",result.baseFreight],["Frete valor (0,4% NF)",result.freteValor],
+    ["GRIS (0,1% NF)",result.gris],["Pedágio",result.pedagio],
+    ["TRT",result.trt],["TDE",result.tde],["TDA",result.tda],["TDC",result.tdc],
+    ["Descarga",result.descarga],["Armazenagem",result.storage],["Paletização",result.palletization],
+    ["TMR",result.tmr],["Reentrega",result.reentrega],["Devolução",result.devolucao]
+  ].filter(([,v])=>v>0).map(([label,v])=>'<div class="quote-row"><span>'+label+'</span><b>'+money(v)+'</b></div>').join("");
+
+  const warningHtml=result.warnings.length
+    ? '<div class="quote-warning"><b>Atenção:</b><ul>'+result.warnings.map(w=>'<li>'+w+'</li>').join("")+'</ul></div>'
+    : "";
+
+  box.innerHTML=
+    '<div class="quote-summary"><div><small>PESO CONSIDERADO</small><b>'+result.billableWeight.toLocaleString("pt-BR",{maximumFractionDigits:3})+' kg</b></div><div><small>ROTA</small><b>'+origin+' → '+destination+'</b></div><div class="total"><small>FRETE ESTIMADO</small><b>'+money(result.total)+'</b></div></div>'+
+    '<div class="quote-breakdown">'+rows+'</div>'+warningHtml+
+    '<div class="quote-note">Cálculo baseado na tabela contratual fornecida para Brasil Engrenagens. ICMS não foi incluído, conforme regra da tabela. TDE/TDA/TDC só entram com valor cadastrado.</div>';
+  result.scrollIntoView?.({behavior:"smooth",block:"nearest"});
 });
 
 $("#cep")?.addEventListener("input",e=>{
