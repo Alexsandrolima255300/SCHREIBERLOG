@@ -26,27 +26,9 @@ const setupCnpjLookup=({inputId,buttonId,statusId,companyId,addressId,routeId,ce
     button.disabled=true; button.textContent="Consultando...";
     if(status) status.innerHTML='<span class="status-loading">Buscando dados na BrasilAPI...</span>';
     try{
-      let response=await fetch("https://brasilapi.com.br/cnpj/v1/"+cnpj);
-      let data=null;
-      if(response.ok){
-        data=await response.json();
-      }else{
-        response=await fetch("https://publica.cnpj.ws/cnpj/"+cnpj);
-        if(!response.ok) throw new Error(response.status===404?"CNPJ não encontrado nas bases de consulta.":"Não foi possível consultar este CNPJ agora.");
-        const fallback=await response.json();
-        const e=fallback.estabelecimento||{};
-        data={
-          razao_social:fallback.razao_social,
-          nome_fantasia:e.nome_fantasia,
-          logradouro:e.logradouro,
-          numero:e.numero,
-          complemento:e.complemento,
-          bairro:e.bairro,
-          cep:e.cep,
-          municipio:e.cidade?.nome,
-          uf:e.estado?.sigla
-        };
-      }
+      const response=await fetch("/api/cnpj?cnpj="+encodeURIComponent(cnpj));
+      const data=await response.json().catch(()=>({}));
+      if(!response.ok) throw new Error(data.error||"Não foi possível consultar este CNPJ agora.");
       const nome=data.razao_social||data.nome_fantasia||"";
       const endereco=[data.logradouro,data.numero,data.complemento,data.bairro].filter(Boolean).join(", ");
       const cidadeUf=[data.municipio,data.uf].filter(Boolean).join(" / ");
