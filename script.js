@@ -84,7 +84,7 @@ setupCnpjLookup({
 const money=v=>window.SchreiberCalculator?.formatBRL(v)||"R$ 0,00";
 const parseBRL=v=>{
   if(typeof v==="number") return v;
-  const raw=String(v||"").trim().replace(/R\$\s?/g,"").replace(/./g,"").replace(",",".");
+  const raw=String(v||"").trim().replace(/R\$\s?/g,"").replace(/\./g,"").replace(",",".");
   const n=Number(raw);
   return Number.isFinite(n)?n:0;
 };
@@ -109,9 +109,9 @@ $("#quoteForm")?.addEventListener("submit",e=>{
   if(!origin||!destination||weight<=0||invoice<0||volumes<1)return;
 
   const result=window.SchreiberCalculator.calculateSchreiberQuote({
-    origin,destination,weight,invoice,volumes,volumeM3,
+    origin,destination,weight,invoice,volumes,volumeM3,lengthCm,
     trt:$("#trt")?.checked,tde:$("#tde")?.checked,tdeValue:Number($("#tde")?.dataset.tdeMinimum||0),tda:$("#tda")?.checked,tdc:$("#tdc")?.checked,
-    reentrega:$("#reentrega")?.checked,devolucao:$("#devolucao")?.checked,tmr:$("#tmr")?.checked,
+    reentrega:$("#reentrega")?.checked,devolucao:$("#devolucao")?.checked,tmr:$("#tmr")?.checked || lengthCm>300,
     pallets:Number($("#pallets")?.value||0),storageDays:Number($("#storageDays")?.value||0)
   });
 
@@ -132,7 +132,7 @@ $("#quoteForm")?.addEventListener("submit",e=>{
   box.innerHTML=
     '<div class="quote-summary"><div><small>PESO CONSIDERADO</small><b>'+result.billableWeight.toLocaleString("pt-BR",{maximumFractionDigits:3})+' kg</b></div><div><small>ROTA</small><b>'+origin+' → '+destination+'</b></div><div class="total"><small>FRETE ESTIMADO</small><b>'+money(result.total)+'</b></div></div>'+
     '<div class="quote-breakdown">'+rows+'</div>'+warningHtml+
-    '<div class="quote-note">Cálculo baseado na tabela contratual fornecida para Brasil Engrenagens. ICMS não foi incluído, conforme regra da tabela. TDE é identificado automaticamente pelo CNPJ do destinatário conforme a tabela de agosto/2026.</div>';
+    '<div class="quote-note">Cálculo baseado na tabela contratual fornecida para Brasil Engrenagens. ICMS fica reservado para a próxima etapa e não altera o valor calculado nesta versão. TDE é identificado automaticamente pelo CNPJ do destinatário conforme a tabela de agosto/2026.</div>';
   box.scrollIntoView?.({behavior:"smooth",block:"nearest"});
 });
 
