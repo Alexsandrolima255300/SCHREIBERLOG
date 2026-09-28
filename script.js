@@ -37,7 +37,7 @@ $("#quoteForm")?.addEventListener("submit",e=>{
     '<div class="quote-summary"><div><small>PESO CONSIDERADO</small><b>'+result.billableWeight.toLocaleString("pt-BR",{maximumFractionDigits:3})+' kg</b></div><div><small>ROTA</small><b>'+origin+' → '+destination+'</b></div><div class="total"><small>FRETE ESTIMADO</small><b>'+money(result.total)+'</b></div></div>'+
     '<div class="quote-breakdown">'+rows+'</div>'+warningHtml+
     '<div class="quote-note">Cálculo baseado na tabela contratual fornecida para Brasil Engrenagens. ICMS não foi incluído, conforme regra da tabela. TDE/TDA/TDC só entram com valor cadastrado.</div>';
-  result.scrollIntoView?.({behavior:"smooth",block:"nearest"});
+  box.scrollIntoView?.({behavior:"smooth",block:"nearest"});
 });
 
 $("#cep")?.addEventListener("input",e=>{
