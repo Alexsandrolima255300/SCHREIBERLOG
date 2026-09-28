@@ -30,7 +30,7 @@ $("#lookupCnpj")?.addEventListener("click",async()=>{
   button.textContent="Consultando...";
   if(cnpjStatus) cnpjStatus.innerHTML='<span class="status-loading">Buscando dados na BrasilAPI...</span>';
   try{
-    const response=await fetch("https://brasilapi.com.br/api/cnpj/v1/"+cnpj);
+    const response=await fetch("https://brasilapi.com.br/cnpj/v1/"+cnpj);
     if(!response.ok) throw new Error(response.status===404?"CNPJ não encontrado.":"Não foi possível consultar o CNPJ.");
     const data=await response.json();
     if(companyInput) companyInput.value=data.razao_social||data.nome_fantasia||"";
