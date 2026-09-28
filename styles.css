@@ -316,3 +316,68 @@
   .quote-result:after{content:"Documento gerado pelo portal de cotação SchreiberLog";display:block;margin-top:22px;padding-top:10px;border-top:1px solid #dfe5ed;color:#7b8798;font-size:10px}
   @page{size:A4;margin:16mm}
 }
+
+
+/* Banner principal usando a imagem oficial do repositório */
+.hero{
+  background:#12226c;
+}
+.hero-grid{
+  position:relative;
+  z-index:2;
+  grid-template-columns:1fr;
+  min-height:670px;
+}
+.hero-copy{
+  max-width:720px;
+  position:relative;
+  z-index:3;
+}
+.hero-visual{
+  position:absolute;
+  inset:0;
+  min-height:0;
+  width:100%;
+  z-index:0;
+}
+.hero-banner{
+  width:100%;
+  max-width:none;
+  height:100%;
+  border-radius:0;
+  border:0;
+  box-shadow:none;
+}
+.hero-banner::after{
+  background:linear-gradient(90deg,rgba(10,24,63,.90) 0%,rgba(10,24,63,.68) 38%,rgba(10,24,63,.16) 72%,rgba(10,24,63,.08) 100%);
+}
+.hero-banner img{
+  object-fit:cover;
+  object-position:center;
+}
+.hero-banner-badge{
+  display:none;
+}
+@media(max-width:900px){
+  .hero-grid{
+    min-height:650px;
+    padding-top:70px;
+    padding-bottom:70px;
+  }
+  .hero-visual{
+    min-height:0;
+  }
+  .hero-banner{
+    height:100%;
+    max-width:none;
+  }
+}
+@media(max-width:560px){
+  .hero-grid{
+    min-height:650px;
+  }
+  .hero-banner{
+    height:100%;
+    border-radius:0;
+  }
+}
