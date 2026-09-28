@@ -169,7 +169,5 @@ $("#cep")?.addEventListener("input",e=>{
 
 $("#trackingForm")?.addEventListener("submit",e=>{
   e.preventDefault();
-  const code=$("#trackingCode").value.trim();
-  const box=$("#trackingResult"); box.hidden=false;
-  box.innerHTML="<b>Consulta preparada para o código "+code+".</b><br>Para exibir eventos reais, conectaremos este campo ao sistema de rastreamento/TMS da SchreiberLog.";
+  window.location.href="https://sbr.log.br/rastreamento.php";
 });
