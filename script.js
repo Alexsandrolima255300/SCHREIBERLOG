@@ -3,6 +3,53 @@ const menuBtn=$("#menuBtn"),mobileNav=$("#mobileNav");
 menuBtn?.addEventListener("click",()=>{mobileNav.style.display=mobileNav.style.display==="block"?"none":"block"});
 document.querySelectorAll(".mobile-nav a").forEach(a=>a.addEventListener("click",()=>mobileNav.style.display="none"));
 
+const onlyDigits=v=>v.replace(/\\D/g,"");
+
+const formatCnpj=v=>{
+  const d=onlyDigits(v).slice(0,14);
+  if(d.length<=2)return d;
+  if(d.length<=5)return d.slice(0,2)+"."+d.slice(2);
+  if(d.length<=8)return d.slice(0,2)+"."+d.slice(2,5)+"."+d.slice(5);
+  if(d.length<=12)return d.slice(0,2)+"."+d.slice(2,5)+"."+d.slice(5,8)+"/"+d.slice(8);
+  return d.slice(0,2)+"."+d.slice(2,5)+"."+d.slice(5,8)+"/"+d.slice(8,12)+"-"+d.slice(12,14);
+};
+
+const cnpjInput=$("#cnpj");
+const cnpjStatus=$("#cnpjStatus");
+const companyInput=$("#companyName");
+cnpjInput?.addEventListener("input",e=>{e.target.value=formatCnpj(e.target.value);});
+
+$("#lookupCnpj")?.addEventListener("click",async()=>{
+  const cnpj=onlyDigits(cnpjInput?.value||"");
+  if(cnpj.length!==14){
+    if(cnpjStatus) cnpjStatus.innerHTML='<span class="status-error">Digite um CNPJ válido com 14 dígitos.</span>';
+    return;
+  }
+  const button=$("#lookupCnpj");
+  button.disabled=true;
+  button.textContent="Consultando...";
+  if(cnpjStatus) cnpjStatus.innerHTML='<span class="status-loading">Buscando dados na BrasilAPI...</span>';
+  try{
+    const response=await fetch("https://brasilapi.com.br/api/cnpj/v1/"+cnpj);
+    if(!response.ok) throw new Error(response.status===404?"CNPJ não encontrado.":"Não foi possível consultar o CNPJ.");
+    const data=await response.json();
+    if(companyInput) companyInput.value=data.razao_social||data.nome_fantasia||"";
+    if(cnpjStatus) cnpjStatus.innerHTML='<span class="status-success">✓ Empresa encontrada: '+(data.nome_fantasia||data.razao_social||"Cadastro localizado")+'</span>';
+    if(data.cep && $("#cep") && !$("#cep").value) $("#cep").value=formatCep(data.cep);
+  }catch(error){
+    if(cnpjStatus) cnpjStatus.innerHTML='<span class="status-error">'+(error.message||"Erro ao consultar CNPJ.")+'</span>';
+    if(companyInput) companyInput.value="";
+  }finally{
+    button.disabled=false;
+    button.textContent="Buscar CNPJ";
+  }
+});
+
+const formatCep=v=>{
+  const d=onlyDigits(v).slice(0,8);
+  return d.length>5?d.slice(0,5)+"-"+d.slice(5):d;
+};
+
 const money=v=>window.SchreiberCalculator?.formatBRL(v)||"R$ 0,00";
 
 $("#quoteForm")?.addEventListener("submit",e=>{
