@@ -82,7 +82,7 @@ setupCnpjLookup({
 });
 
 const money=v=>window.SchreiberCalculator?.formatBRL(v)||"R$ 0,00";
-const normalizeCep=v=>String(v||"").replace(/\\D/g,"").slice(0,8);
+const normalizeCep=v=>String(v||"").replace(/\D/g,"").slice(0,8);
 const formatCepInput=v=>{const d=normalizeCep(v);return d.length>5?d.slice(0,5)+"-"+d.slice(5):d;};
 const resolveCep=(cep,target)=>{
   const clean=normalizeCep(cep);
@@ -112,7 +112,7 @@ const formatInputBRL=v=>{
   return cents.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
 };
 
-$("#quoteForm")?.addEventListener("submit",e=>{
+$("#quoteForm")?.addEventListener("submit",async e=>{
   e.preventDefault();
   const origin=$("#origin").value.trim(), destination=$("#destination").value.trim(), originCep=normalizeCep($("#senderCep")?.value), destinationCep=normalizeCep($("#cep")?.value), originRegion=$("#originRegion")?.value||"";
   const weight=Number($("#weight").value||0), invoice=parseBRL($("#invoice").value), volumes=Number($("#volumes").value||0);
@@ -157,7 +157,7 @@ $("#quoteForm")?.addEventListener("submit",e=>{
   window.__schreiberLastQuote=printableQuote;
 
   box.innerHTML=
-    '<div class="quote-summary"><div><small>ORIGEM OPERACIONAL</small><b>'+originRegion+'</b></div><div><small>ATENDIMENTO</small><b>'+(service?service[5]+" • "+service[6]+" dia(s)":"CEP não localizado")+'</b></div><div><small>PESO CONSIDERADO</small><b>'+result.billableWeight.toLocaleString("pt-BR",{maximumFractionDigits:3})+' kg</b></div><div><small>ROTA</small><b>'+origin+' → '+destination+'</b></div><div class="total"><small>FRETE ESTIMADO</small><b>'+money(result.total)+'</b></div></div>'+
+    '<div class="quote-summary"><div><small>ORIGEM OPERACIONAL</small><b>'+originRegion+'</b></div><div><small>ATENDIMENTO</small><b>'+(service?service.branch+" • "+service.prazo+" dia(s)":"CEP não localizado")+'</b></div><div><small>PESO CONSIDERADO</small><b>'+result.billableWeight.toLocaleString("pt-BR",{maximumFractionDigits:3})+' kg</b></div><div><small>ROTA</small><b>'+origin+' → '+destination+'</b></div><div class="total"><small>FRETE ESTIMADO</small><b>'+money(result.total)+'</b></div></div>'+
     '<div class="quote-breakdown">'+rows+'</div>'+warningHtml+
     '<div class="quote-note">Cálculo baseado na tabela contratual fornecida para Brasil Engrenagens. ICMS: 18% para SP e 12% para SC, calculado sobre o valor do frete. GRIS: 0,1% sobre o valor da NF. TDE é identificado automaticamente pelo CNPJ do destinatário conforme a tabela de agosto/2026.</div>'+
     '<div class="quote-actions"><button class="btn btn-primary" type="button" id="downloadQuoteBtn">Baixar cotação em PDF</button><button class="btn btn-ghost" type="button" id="printQuoteBtn">Imprimir</button></div>';
