@@ -61,12 +61,12 @@ setupCnpjLookup({
 const money=v=>window.SchreiberCalculator?.formatBRL(v)||"R$ 0,00";
 const parseBRL=v=>{
   if(typeof v==="number") return v;
-  const raw=String(v||"").trim().replace(/R\\$\\s?/g,"").replace(/\\./g,"").replace(",",".");
+  const raw=String(v||"").trim().replace(/R\$\s?/g,"").replace(/./g,"").replace(",",".");
   const n=Number(raw);
   return Number.isFinite(n)?n:0;
 };
 const formatInputBRL=v=>{
-  const digits=String(v||"").replace(/\\D/g,"");
+  const digits=String(v||"").replace(/\D/g,"");
   if(!digits) return "";
   const cents=Number(digits)/100;
   return cents.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
