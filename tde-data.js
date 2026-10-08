@@ -12,4 +12,4 @@ async function loadSchreiberTDE(){
  return map;
 }
 window.SchreiberTDEReady=loadSchreiberTDE().catch(e=>{console.error(e);return new Map();});
-window.findSchreiberTDE=async function(cnpj){const map=await window.SchreiberTDEReady;const d=String(cnpj||'').replace(/\\D/g,'');if(!d)return null;const exact=map.get(d.slice(0,8));return exact??null;};
+window.findSchreiberTDE=async function(cnpj){const map=await window.SchreiberTDEReady;const d=String(cnpj||'').replace(/\D/g,'');if(!d)return null;const exact=map.get(d.slice(0,8));return exact??null;};
